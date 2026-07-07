@@ -1,6 +1,7 @@
 // app/shop/[...slug]/page.tsx
-import { client } from "@/sanity/lib/client";
+import { client } from "@/app/lib/sanity";
 import ProductCard from "@/app/Components/ProductCard";
+import { slugify, supermarketCategories } from "@/supermarket.config";
 
 type SanityImage = {
   _type: "image";
@@ -35,7 +36,12 @@ export default async function CategoryPage({
   const currentSlugRaw = slug[slug.length - 1];
   
   // Convert "biro-pens" to "biro pens" for display and querying
-  const currentSlugString = currentSlugRaw.replace(/-/g, " ").toLowerCase();
+  const allTerms = supermarketCategories.flatMap((category) => [
+    category.title,
+    ...category.subCategories.flatMap((sub) => [sub.name, ...sub.items]),
+  ]);
+  const matchedTerm = allTerms.find((term) => slugify(term) === currentSlugRaw);
+  const currentSlugString = (matchedTerm || currentSlugRaw.replace(/-/g, " ")).toLowerCase();
 
   // GROQ Query Update:
   // We use `lower()` function to match the URL slug (lowercase) with the Sanity field (Title Case)
@@ -52,8 +58,8 @@ export default async function CategoryPage({
   );
 
   return (
-    <main className="min-h-screen bg-white px-[5%] lg:px-[10%] py-8 lg:py-12 overflow-x-hidden">
-      <header className="mb-8 lg:mb-12 border-b border-gray-100 pb-6 lg:pb-10">
+    <main className="min-h-screen bg-[#f7f8f4] px-[5%] lg:px-[8%] py-8 lg:py-12 overflow-x-hidden">
+      <header className="mb-8 lg:mb-12 border-b border-black/10 bg-white rounded-lg p-6 lg:p-8">
         
         {/* BREADCRUMBS - Responsive Fix */}
         <div className="flex flex-wrap items-center gap-2 text-[10px] lg:text-xs font-bold text-gray-400 Unbounded uppercase mb-4">
@@ -76,11 +82,11 @@ export default async function CategoryPage({
         </div>
 
         {/* TITLE - Responsive Fix */}
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-black Unbounded uppercase tracking-tighter wrap-break-word leading-tight">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter wrap-break-word leading-tight">
           {currentSlugString}
         </h1>
         
-        <p className="mt-2 text-xs text-gray-400 font-bold Unbounded">
+        <p className="mt-2 text-xs text-gray-400 font-bold">
             {products.length} Products Found
         </p>
       </header>
@@ -93,12 +99,12 @@ export default async function CategoryPage({
           ))}
         </div>
       ) : (
-        <div className="py-20 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+        <div className="py-20 text-center bg-white rounded-lg border border-dashed border-gray-200">
           <i className="bi bi-box-seam text-4xl text-gray-300 mb-4 block"></i>
-          <p className="Unbounded font-bold text-gray-400 text-sm">
+          <p className="font-bold text-gray-400 text-sm">
             No products found in this category.
           </p>
-          <p className="text-xs text-gray-300 mt-2">Try checking &quot;Office Supplies&quot;</p>
+          <p className="text-xs text-gray-300 mt-2">Try checking another supermarket aisle.</p>
         </div>
       )}
     </main>

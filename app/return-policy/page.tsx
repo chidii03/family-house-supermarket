@@ -1,5 +1,4 @@
 // app/return-policy/page.tsx
-import Link from "next/link";
 import { RefreshCw, Clock, Package, AlertCircle, CheckCircle, XCircle } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -9,7 +8,7 @@ const Section = ({ icon: Icon, title, children }: { icon: LucideIcon; title: str
   <div className="mb-10">
     <div className="flex items-center gap-3 mb-4">
       <div className="w-10 h-10 rounded-xl bg-[#4b70f5]/10 flex items-center justify-center shrink-0">
-        <Icon size={20} className="text-[#4b70f5]" />
+        <Icon size={20} className="text-[#dc2626]" />
       </div>
       <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">{title}</h2>
     </div>
@@ -21,7 +20,7 @@ export default function ReturnPolicy() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <div className="bg-linear-to-br from-[#4b70f5] to-[#2952e3] text-white">
+      <div className="bg-linear-to-br from-[#dc2626] to-[#dc2626] text-white">
         <div className="max-w-4xl mx-auto px-6 py-8">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center">
@@ -111,7 +110,7 @@ export default function ReturnPolicy() {
               { step: "4", title: "Inspection & Refund", desc: "Once we receive and inspect the item (2–3 business days), we will process your refund or exchange within 5–10 business days." },
             ].map((s) => (
               <li key={s.step} className="flex gap-5">
-                <div className="w-10 h-10 rounded-full bg-[#4b70f5] text-white font-black flex items-center justify-center text-sm shrink-0">
+                <div className="w-10 h-10 rounded-full bg-[#dc2626] text-white font-black flex items-center justify-center text-sm shrink-0">
                   {s.step}
                 </div>
                 <div>
@@ -128,7 +127,7 @@ export default function ReturnPolicy() {
             <p className="text-gray-700 leading-relaxed">
               If you received a <strong className="text-red-600">damaged, defective, or incorrect item</strong>, please contact us within <strong>48 hours</strong> of delivery. 
               Send clear photos of the item and packaging to{" "}
-              <a href="mailto:steveobizz@yahoo.com" className="text-[#4b70f5] font-semibold">steveobizz@yahoo.com</a>.
+              <a href="mailto:steveobizz@yahoo.com" className="text-[#dc2626] font-semibold">familyhousesupermarket@gmail.com</a>.
               We will arrange a <strong>free replacement or full refund</strong> at no cost to you.
             </p>
           </div>
@@ -138,7 +137,7 @@ export default function ReturnPolicy() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-[#4b70f5] text-white">
+                <tr className="bg-[#dc2626] text-white">
                   <th className="p-4 text-left font-bold rounded-tl-xl">Payment Method</th>
                   <th className="p-4 text-left font-bold">Refund Method</th>
                   <th className="p-4 text-left font-bold rounded-tr-xl">Processing Time</th>
@@ -161,16 +160,6 @@ export default function ReturnPolicy() {
           </div>
         </Section>
       </div>
-
-      <footer className="border-t border-gray-100 py-8">
-        <div className="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-          <p>© {new Date().getFullYear()} Steve O Bizz Store. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="/terms" className="hover:text-[#4b70f5] transition-colors">Terms & Conditions</Link>
-            <Link href="/legal-notice" className="hover:text-[#4b70f5] transition-colors">Legal Notice</Link>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

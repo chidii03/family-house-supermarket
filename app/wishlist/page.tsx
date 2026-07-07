@@ -161,7 +161,7 @@ export default function Wishlist() {
                     return (
                       <tr
                         key={item._id}
-                        className="hover:bg-gray-50 transition-colors"
+                        className="hover:bg-red-50 transition-colors"
                       >
                         <td className="py-5 px-6 flex items-center gap-4">
                           {/* <Link href={`/product/${item.slug.current}`}> */}

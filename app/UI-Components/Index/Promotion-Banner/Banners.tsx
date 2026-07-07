@@ -37,8 +37,8 @@ export default function Banners() {
         }`;
         const data = await client.fetch(query);
         setBannerProducts(data);
-      } catch (error) {
-        console.error("Sanity Banner Error:", error);
+      } catch {
+        setBannerProducts([]);
       } finally {
         setLoading(false);
       }
@@ -61,11 +61,11 @@ export default function Banners() {
       <div className="max-w-292.5 w-full mx-auto px-4 sm:px-8 xl:px-0">
         {/* --- BANNER 1: Large Main Banner (Dynamic) --- */}
         {mainBanner && (
-          <div className="relative z-1 overflow-hidden rounded-2xl bg-[#F8F9FA] border border-gray-100 mb-8">
+          <div className="relative z-1 overflow-hidden rounded-2xl bg-white border border-red-100 mb-8 shadow-[0_18px_45px_rgba(215,25,32,0.08)]">
             <Link href={`/product/${mainBanner.slug.current}`}>
               <div className="flex flex-col lg:flex-row items-center">
                 <div className="w-full lg:w-1/2 p-8 lg:p-16">
-                  <span className="block font-serif text-xl lg:text-2xl text-blue-900 mb-3 italic">
+                  <span className="block text-sm font-black uppercase tracking-widest text-(--prim-color) mb-3">
                     {mainBanner.banner_text}
                   </span>
                   <h2 className="font-sans font-black text-3xl lg:text-5xl text-dark uppercase leading-tight">
@@ -77,7 +77,7 @@ export default function Banners() {
                   <p className="text-gray-600 text-base mb-8 max-w-95 line-clamp-2">
                     {mainBanner.description}
                   </p>
-                  <button className="px-8 py-3.5 rounded-full text-white font-bold bg-(--prim-color) hover:bg-white hover:text-(--prim-color) border border-(--prim-color) transition-all duration-300 shadow-lg flex items-center gap-2 cursor-pointer">
+                  <button className="px-8 py-3.5 rounded-2xl text-white font-bold bg-(--prim-color) hover:bg-(--prim-dark) border border-(--prim-color) transition-all duration-300 shadow-lg flex items-center gap-2 cursor-pointer">
                     Shop Now <i className="bi bi-arrow-right ps-2"></i>
                   </button>
                 </div>
@@ -99,22 +99,22 @@ export default function Banners() {
         <div className="grid gap-8 grid-cols-1 lg:grid-cols-2">
           {/* --- BANNER 2: Blue Themed (Dynamic) --- */}
           {secondBanner && (
-            <div className="relative overflow-hidden rounded-2xl bg-[#E0F2FE] flex flex-col h-full border border-blue-100">
+            <div className="relative overflow-hidden rounded-2xl bg-white flex flex-col h-full border border-red-100 shadow-[0_18px_45px_rgba(215,25,32,0.08)]">
               <Link href={`/product/${secondBanner.slug.current}`}>
                 <div className="p-8 lg:p-12 z-10">
-                  <span className="block font-serif text-xl text-blue-800 mb-2 italic">
+                  <span className="block text-sm font-black uppercase tracking-widest text-(--prim-color) mb-2">
                     {secondBanner.banner_text}
                   </span>
                   <h2 className="Unbounded font-black text-3xl lg:text-5xl uppercase">
                     {secondBanner.name.split(" ").slice(0, 2).join(" ")}{" "}
                   </h2>
-                  <span className="text-blue-700 font-sans font-black text-3xl lg:text-5xl text-dark mb-2 uppercase leading-tight">
+                  <span className="text-(--prim-color) font-sans font-black text-3xl lg:text-5xl text-dark mb-2 uppercase leading-tight">
                     {secondBanner.name.split(" ").slice(6, 8).join(" ")}
                   </span>{" "}
-                  <p className="text-blue-900/70 mb-6 font-medium max-w-65 line-clamp-2">
+                  <p className="text-gray-600 mb-6 font-medium max-w-65 line-clamp-2">
                     {secondBanner.description}
                   </p>
-                  <button className="px-8 py-3 rounded-full text-white font-bold bg-blue-600 hover:bg-blue-700 transition-all duration-300 shadow-md cursor-pointer">
+                  <button className="px-8 py-3 rounded-lg text-white font-bold bg-(--prim-color) hover:bg-(--prim-dark) transition-all duration-300 shadow-md cursor-pointer">
                     Shop Now
                   </button>
                 </div>
@@ -132,22 +132,22 @@ export default function Banners() {
 
           {/* --- BANNER 3: Amber Themed (Dynamic) --- */}
           {thirdBanner && (
-            <div className="relative overflow-hidden rounded-2xl bg-[#FEF3C7] flex flex-col h-full border border-amber-100">
+            <div className="relative overflow-hidden rounded-2xl bg-white flex flex-col h-full border border-red-100 shadow-[0_18px_45px_rgba(215,25,32,0.08)]">
               <Link href={`/product/${thirdBanner.slug.current}`}>
                 <div className="p-8 lg:p-12 z-10">
-                  <span className="block font-serif text-xl text-amber-900 mb-2 italic">
+                  <span className="block text-sm font-black uppercase tracking-widest text-(--prim-color) mb-2">
                     {thirdBanner.banner_text}
                   </span>
                   <h2 className="font-sans font-black text-3xl lg:text-5xl text-dark uppercase leading-tight">
                     {thirdBanner.name.split(" ").slice(4, 6).join(" ")}{" "}
                   </h2>
-                  <span className=" font-sans font-black text-3xl lg:text-5xl text-dark text-amber-600 mb-2 uppercase leading-tight">
+                  <span className=" font-sans font-black text-3xl lg:text-5xl text-dark text-(--prim-color) mb-2 uppercase leading-tight">
                     {thirdBanner.name.split(" ").slice(6, 8).join(" ")}
                   </span>{" "}
-                  <p className="text-amber-900/70 mb-6 font-medium max-w-65 line-clamp-2">
+                  <p className="text-gray-600 mb-6 font-medium max-w-65 line-clamp-2">
                     {thirdBanner.description}
                   </p>
-                  <button className="px-8 py-3 rounded-full text-white font-bold bg-amber-600 hover:bg-amber-700 transition-all duration-300 shadow-md cursor-pointer">
+                  <button className="px-8 py-3 rounded-lg text-white font-bold bg-(--prim-color) hover:bg-(--prim-dark) transition-all duration-300 shadow-md cursor-pointer">
                     Buy Now
                   </button>
                 </div>

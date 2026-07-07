@@ -1,390 +1,5 @@
 import { defineType, defineField } from "sanity";
-
-// Extracted Data from your Navbar for Dropdowns
-const categories = [
-  { title: "Office Supplies", value: "Office Supplies" },
-  { title: "School Supplies", value: "School Supplies" },
-  { title: "Ink and Toner", value: "Ink and Toner" },
-  { title: "Furniture", value: "Furniture" },
-  { title: "Computer and Accessories", value: "Computer and Accessories" },
-  { title: "Electronics", value: "Electronics" },
-  { title: "Cleaning", value: "Cleaning" },
-  { title: "Breakroom", value: "Breakroom" },
-  { title: "Mailing and Shipping", value: "Mailing and Shipping" },
-  { title: "Shop-Greener-Products", value: "Shop-Greener-Products" },
-];
-
-const subCategories = [
-  // Office Supplies
-  { title: "Office Desk Accessories", value: "Office Desk Accessories" },
-  { title: "Pens, Pencils and Markers", value: "Pens, Pencils and Markers" },
-  {
-    title: "Office Files and Document Storage",
-    value: "Office Files and Document Storage",
-  },
-  {
-    title: "Paper and Writing Materials",
-    value: "Paper and Writing Materials",
-  },
-  { title: "General Office Consumables", value: "General Office Consumables" },
-  {
-    title: "Calendars, Diaries and Office White Board",
-    value: "Calendars, Diaries and Office White Board",
-  },
-
-  // School Supplies
-  {
-    title: "Arts, Crafts and Drawing Materials",
-    value: "Arts, Crafts and Drawing Materials",
-  },
-  {
-    title: "Classroom Teaching Materials",
-    value: "Classroom Teaching Materials",
-  },
-  {
-    title: "Learning and Instructional Materials",
-    value: "Learning and Instructional Materials",
-  },
-  { title: "Nursery and Creche Items", value: "Nursery and Creche Items" },
-
-  // Ink & Toner
-  { title: "Printer Ink Cartridges", value: "Printer Ink Cartridges" },
-  { title: "Printer Toner Cartridges", value: "Printer Toner Cartridges" },
-  { title: "Printer Consumables", value: "Printer Consumables" },
-
-  // Furniture
-  { title: "Office Chairs", value: "Office Chairs" },
-  { title: "Office Tables & Desks", value: "Office Tables & Desks" },
-  { title: "Office Storage", value: "Office Storage" },
-  { title: "Office Decor & Lighting", value: "Office Decor & Lighting" },
-  { title: "Office Organization", value: "Office Organization" },
-
-  // Computer & Accessories
-  { title: "Computer Accessories", value: "Computer Accessories" },
-  { title: "Storage Devices", value: "Storage Devices" },
-  { title: "Laptops & Gadgets", value: "Laptops & Gadgets" },
-  { title: "Networking Equipment", value: "Networking Equipment" },
-  { title: "Computer Parts", value: "Computer Parts" },
-
-  // Electronics
-  { title: "Audio Devices", value: "Audio Devices" },
-  { title: "Gaming Accessories", value: "Gaming Accessories" },
-  { title: "Power Solutions", value: "Power Solutions" },
-  { title: "Smart Devices", value: "Smart Devices" },
-
-  // Cleaning
-  { title: "Cleaning Chemicals", value: "Cleaning Chemicals" },
-  { title: "Cleaning Tools", value: "Cleaning Tools" },
-  { title: "Air & Ventilation", value: "Air & Ventilation" },
-
-  // Breakroom
-  { title: "Drinks", value: "Drinks" },
-  { title: "Snacks", value: "Snacks" },
-  { title: "Kitchen Appliances", value: "Kitchen Appliances" },
-
-  // Mailing & Shipping
-  { title: "Packaging Boxes", value: "Packaging Boxes" },
-  { title: "Packaging tapes", value: "Packaging tapes" },
-  { title: "Envelopes & Mailers", value: "Envelopes & Mailers" },
-  { title: "Packaging Materials", value: "Packaging Materials" },
-
-  // Shop-Greener-Products
-  { title: "Eco Office Supplies", value: "Eco Office Supplies" },
-  { title: "Sustainable Living", value: "Sustainable Living" },
-  { title: "Indoor Recreation", value: "Indoor Recreation" },
-];
-
-const subNames = [
-  // Office Desk Accessories
-  "Staplers and Punchers",
-  "Cellotape and Tape Dispensers",
-  "Office Desk Organisers",
-  "Office Scissors and Paper Cutters",
-  "Office Clipboards",
-  "Measuring Rulers and Scales",
-  "Pen Holders and Pencil Cups",
-  "Office Writing Pads",
-
-  // Pens, Pencils and Markers
-  "Biro Pens",
-  "Art Coloring Pens",
-  "Gel Pens and Rollerball Pens",
-  "Office Highlighters",
-  "HB Pencils and Erasers",
-  "Permanent Markers",
-  "Correction Fluid and Correction Tape",
-  "Pen Refills",
-  "Fancy and Fountain Pens",
-
-  // Office Files and Document Storage
-  "Office File Jackets",
-  "Expanding File Folders",
-  "Suspension Files",
-  "Plastic Storage Boxes",
-  "Office Labels and Price Tags",
-  "Sectional File Folders",
-  "Ring Binders",
-
-  // Paper and Writing Materials
-  "A4 Printing Paper",
-  "Exercise Books and Notebooks",
-  "Sticky Notes",
-  "Office Envelopes",
-  "Cardboard and Card Paper",
-  "Loose Writing Sheets",
-  "Legal Writing Pads",
-  "Photo Printing Paper",
-
-  // General Office Consumables
-  "Paper Clips",
-  "Rubber Bands",
-  "Drawing Pins",
-  "Office Glue and Adhesives",
-  "Office Stamps and Ink Pads",
-  "Office Batteries",
-  "Office Scissors",
-
-  //Calendars, Diaries and Office White Board"
-  "Wall Calendars",
-  "Desk Calendars",
-  "Office Diaries",
-  "Academic Planners",
-  "Whiteboards and Notice Boards",
-
-  // Arts, Crafts and Drawing Materials
-  "Crayons and Colour Pencils",
-  "Washable Markers",
-  "Drawing and Art Paper",
-  "Glitter, Gum and Adhesives",
-  "Drawing Books and Sketch Pads",
-  "Water Colour Paint",
-  "Poster and Acrylic Paint",
-  "Artist Spray",
-
-  // Classroom Teaching Materials
-  "Whiteboards",
-  "Notice Boards",
-  "Educational Wall Charts",
-  "Board Markers",
-  "Board Borders and Trimmers",
-  "Teacher Storage Organisers",
-  "Classroom Teaching Tables and Chairs",
-
-  // Learning and Instructional Materials
-  "Scientific Calculators",
-  "Mathematical Sets",
-  "Flash Cards",
-  "World Globes",
-  "Basic Science Kits",
-
-  // Nursery and Creche Items
-  "Educational Puzzles",
-  "Building Blocks",
-  "Finger Paint",
-  "Alphabet Learning Toys",
-
-  // Printer Ink Cartridges
-  "HP Ink Cartridges",
-  "Epson Printer Ink",
-  "Canon Printer Ink",
-  "Brother Printer Ink",
-  "Compatible Ink Cartridges",
-
-  // Printer Toner Cartridges
-  "HP Laser Toner",
-  "Brother Laser Toner",
-  "Canon Laser Toner",
-  "Samsung Toner",
-  "Xerox Toner",
-
-  // Printer Consumables
-  "Photo Printing Paper",
-  "EcoTank Ink Bottles",
-  "Original and Compatible Cartridges",
-  "Printer Maintenance Kits",
-
-  // Office Chairs
-  "Executive Office Chairs",
-  "Mesh Office Chairs",
-  "Visitor Chairs",
-  "Secretarial Chairs",
-  "Drafting Chairs",
-  "Gaming Chairs",
-  "Heavy Duty Chairs",
-
-  // Office Tables & Desks
-  "Office Tables",
-  "Computer Tables",
-  "Conference Tables",
-  "Training Tables",
-  "Folding Tables",
-  "Reception Counters",
-  "Artist Drawing Tables Set",
-
-  // Office Storage
-  "Filing Cabinets",
-  "Office Book Shelves",
-  "Metal Cabinets",
-  "Office Lockers",
-  "Office Safes",
-  "Drawer Units",
-  "Steel Shelving",
-
-  // Office Decor & Lighting
-  "Table Lamps",
-  "Standing Lamps",
-  "Office Rugs",
-  "Wall Clocks",
-  "Artificial Flowers",
-  "Picture Frames",
-  "Office Mirrors",
-
-  // Office Organization
-  "Document Racks",
-  "Magazine Holders",
-  "Garment Racks",
-  "Wall File Holders",
-
-  // Computer Accessories
-  "Wireless Mouse",
-  "USB Keyboards",
-  "Web Cameras",
-  "Microphones",
-  "Computer Speakers",
-  "Mouse Pads",
-  "Drawing Tablets",
-
-  // Storage Devices
-  "External Hard Drives",
-  "Portable SSDs",
-  "Flash Drives",
-  "Memory Cards",
-  "Backup Drives",
-  "Network Storage",
-
-  // Networking Equipment
-  "Wi-Fi Routers",
-  "Network Switches",
-  "LAN Cables",
-  "Wi-Fi Extenders",
-  "Modems",
-  "Network Adapters",
-  "Fiber Optic Cables",
-
-  // Computer Parts
-  "SSD & HDD",
-  "RAM",
-  "Graphics Cards",
-  "Processors",
-  "Power Supply Units",
-  "Motherboards",
-  "System Units",
-
-  // Audio Devices
-  "Wireless Headsets",
-  "Bluetooth Earphones",
-  "Sound Systems",
-  "Portable Speakers",
-  "Public Address Systems",
-
-  // Gaming Accessories
-  "Game Controllers",
-  "Gaming Headphones",
-  "RGB Keyboards",
-  "Gaming Mouse",
-  "Gaming Monitors",
-  "Steering Wheels",
-
-  // Power Solutions
-  "Power Banks",
-  "Extension Boxes",
-  "UPS Inverters",
-  "Charging Cables",
-  "USB Hubs",
-  "Voltage Regulators",
-  "Power Adapters",
-
-  // Smart Devices
-  "CCTV Cameras",
-  "Smart Bulbs",
-  "Smart Sockets",
-  "Video Door Phones",
-  "Smart Door Locks",
-
-  // Cleaning Chemicals
-  "Disinfectants",
-  "Hand Sanitizers",
-  "Floor Wash",
-  "Glass Cleaners",
-  "Liquid Soap",
-  "Industrial Degreasers",
-  "Laundry Soap",
-
-  // Cleaning Tools
-  "Brooms",
-  "Mops",
-  "Cleaning Cloths",
-  "Waste Bins",
-  "Tissue Paper",
-  "Vacuum Cleaners",
-  "Buckets",
-
-  // Air & Ventilation
-  "Air Fresheners",
-  "Standing Fans",
-  "Wall Fans",
-  "Dehumidifiers",
-  "Heaters",
-
-  // Kitchen Appliances
-  "Microwave Ovens",
-  "Electric Kettles",
-  "Coffee Machines",
-  "Mini Refrigerators",
-  "Toasters",
-  "Water Dispensers",
-
-  // Envelopes & Mailers
-  "Bubble Envelopes",
-  "Courier Bags",
-  "Padded Envelopes",
-  "Office Envelopes",
-  "Document Envelopes",
-
-  // Packaging Materials
-  "Packing Tape",
-  "Bubble Nylon",
-  "Wrapping Paper",
-  "Stretch Film",
-  "Foam Packaging",
-  "Tape Dispensers",
-  "Double Sided tapes",
-  "Duct tape",
-  "Fragile tapes",
-  "Transparent Cellotape",
-  " Brown Cellotapes",
-  "ABRO Ultra Clear Cellotape",
-
-  // Eco Office Supplies
-  "Recycled Paper",
-  "Eco Pens",
-  "Bamboo Desk Items",
-  "Solar Chargers",
-  "Eco Cleaning Products",
-  "Recycled Envelopes",
-
-  // Sustainable Living
-  "Disposable Eco Plates",
-  "Wooden Cutlery",
-  "Organic Tea",
-  "Recycled Tissue",
-  "Solar Power Banks",
-  "Electric Head Shaver",
-
-  //Classic Games
-  "Chess",
-  "Jenga",
-];
+import { itemGroupOptions, mainCategoryOptions, subCategoryOptions } from "../../supermarket.config";
 
 export default defineType({
   name: "product",
@@ -444,13 +59,13 @@ export default defineType({
 
     defineField({
       name: "ctg",
-      title: "ctg",
+      title: "Shelf Label",
       type: "string",
     }),
 
     defineField({
       name: "sale",
-      title: "sale",
+      title: "Promo Badge",
       type: "string",
     }),
 
@@ -482,19 +97,18 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // --- CATEGORY SECTION (KEEP AS-IS) ---
     defineField({
       name: "category",
       title: "Main Category",
       type: "string",
-      options: { list: categories },
+      options: { list: mainCategoryOptions },
     }),
 
     defineField({
       name: "isCategoryProduct",
-      title: "Is Category Product?",
+      title: "Show in Category Collections?",
       description:
-        "Toggle this to differentiate this product as a standard category item.",
+        "Toggle this for products that should appear in supermarket category collections.",
       type: "boolean",
       initialValue: false,
     }),
@@ -503,17 +117,15 @@ export default defineType({
       name: "subCategory",
       title: "Sub Category",
       type: "string",
-      options: { list: subCategories },
+      options: { list: subCategoryOptions },
     }),
 
     defineField({
       name: "subName",
-      title: "Sub Name (Item Group)",
-      description: "e.g., 'Biro Pens' or 'A4 Printing Paper'",
+      title: "Product Group",
+      description: "Examples: Rice, Baby Formula, Soft Drinks, Chicken Wings.",
       type: "string",
-      options: {
-        list: subNames.map((name) => ({ title: name, value: name })),
-      },
+      options: { list: itemGroupOptions },
     }),
 
     // STOCK STATUS
@@ -546,14 +158,14 @@ export default defineType({
 
     defineField({
       name: "isBestOffer",
-      title: "Best Offer ",
+      title: "Best Offer",
       type: "boolean",
       initialValue: false,
     }),
 
     defineField({
       name: "isHero",
-      title: "Hero ",
+      title: "Homepage Hero",
       type: "boolean",
       initialValue: false,
     }),
@@ -583,7 +195,7 @@ export default defineType({
       name: "banner_text",
       title: "banner_text",
       type: "string",
-      description: "Controls samll text of products in Promo banner section",
+      description: "Controls small text of products in Promo banner section",
     }),
 
     defineField({
@@ -670,4 +282,8 @@ export default defineType({
     },
   },
 });
-export { categories, subCategories, subNames };
+export {
+  mainCategoryOptions as categories,
+  subCategoryOptions as subCategories,
+  itemGroupOptions as subNames,
+};

@@ -54,10 +54,10 @@ export default function SuccessPage() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href="/track" className="group bg-black text-white px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest flex items-center justify-center gap-3 hover:bg-gray-800 transition-all active:scale-95 shadow-xl shadow-black/20">
+          <Link href="/track" className="group bg-(--prim-color) text-white px-10 py-5 rounded-2xl font-black uppercase text-sm tracking-widest flex items-center justify-center gap-3 hover:bg-(--prim-dark) transition-all active:scale-95 shadow-xl shadow-red-500/20">
             Track Your Package <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform"/>
           </Link>
-          <Link href="/" className="px-10 py-5 border-2 border-black text-gray-900 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-gray-50 transition-all">
+          <Link href="/" className="px-10 py-5 border-2 border-red-100 text-(--prim-color) rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-red-50 transition-all">
             Back to Home
           </Link>
         </div>

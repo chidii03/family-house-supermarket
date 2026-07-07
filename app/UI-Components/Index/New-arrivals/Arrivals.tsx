@@ -31,14 +31,21 @@ type CartItem = Product & { qty: number };
 
 export default function Arrivals() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchArrivals = async () => {
-      const query = `*[_type == "product" && isArrivals == true] | order(_createdAt desc)[0...16]{
-        _id, name, price, "lessprice": lessPrice, slug, image, review, sale, soldCurrent, soldTotal
-      }`;
-      const data = await sanityFetch<Product[]>(query);
-      setProducts(data || []);
+      try {
+        const query = `*[_type == "product" && isArrivals == true] | order(_createdAt desc)[0...16]{
+          _id, name, price, "lessprice": lessPrice, slug, image, review, sale, soldCurrent, soldTotal
+        }`;
+        const data = await sanityFetch<Product[]>(query);
+        setProducts(data || []);
+      } catch {
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchArrivals();
   }, []);
@@ -73,6 +80,9 @@ export default function Arrivals() {
     }
   };
 
+  if (loading) return null;
+  if (products.length === 0) return null;
+
   return (
     <div className="px-[5%] lg:px-[8%] py-12 bg-white">
       <span className="flex items-center gap-2.5 font-medium text-black mb-1.5">
@@ -85,12 +95,12 @@ export default function Arrivals() {
         >
           <path
             d="M3.11826 15.4622C4.11794 16.6668 5.97853 16.6668 9.69971 16.6668H10.3007C14.0219 16.6668 15.8825 16.6668 16.8821 15.4622M3.11826 15.4622C2.11857 14.2577 2.46146 12.429 3.14723 8.77153C3.63491 6.17055 3.87875 4.87006 4.8045 4.10175M3.11826 15.4622C3.11826 15.4622 3.11826 15.4622 3.11826 15.4622ZM16.8821 15.4622C17.8818 14.2577 17.5389 12.429 16.8532 8.77153C16.3655 6.17055 16.1216 4.87006 15.1959 4.10175M16.8821 15.4622C16.8821 15.4622 16.8821 15.4622 16.8821 15.4622ZM15.1959 4.10175C14.2701 3.33345 12.947 3.33345 10.3007 3.33345H9.69971C7.0534 3.33345 5.73025 3.33345 4.8045 4.10175M15.1959 4.10175C15.1959 4.10175 15.1959 4.10175 15.1959 4.10175ZM4.8045 4.10175C4.8045 4.10175 4.8045 4.10175 4.8045 4.10175Z"
-            stroke="#3C50E0"
+            stroke="#d71920"
             strokeWidth="1.5"
           />
           <path
             d="M7.64258 6.66678C7.98578 7.63778 8.91181 8.33345 10.0003 8.33345C11.0888 8.33345 12.0149 7.63778 12.3581 6.66678"
-            stroke="#3C50E0"
+            stroke="#d71920"
             strokeWidth="1.5"
             strokeLinecap="round"
           />
@@ -129,7 +139,7 @@ export default function Arrivals() {
                   handleAddToWishlist(product);
                 }}
                 className="absolute top-0 left-0 w-10 h-10 rounded-full
-                     bg-[#d3ddec] text-[#7d879c]
+                     bg-red-50 text-(--prim-color)
                      flex items-center justify-center
                      hover:bg-(--prim-color) hover:text-white transition-all"
               >
@@ -143,7 +153,7 @@ export default function Arrivals() {
               font-bold text-white rounded
               ${
                 product.sale === "New"
-                  ? "bg-yellow-400"
+                  ? "bg-(--prim-color)"
                   : product.sale.includes("%")
                     ? "bg-red-500"
                     : "opacity-0"
@@ -173,7 +183,7 @@ export default function Arrivals() {
                 {product.name}
               </h3>
 
-              <div className="flex items-center gap-1 text-yellow-400 text-xs">
+              <div className="flex items-center gap-1 text-(--prim-color) text-xs">
                 <i className="bi bi-star-fill"></i>
                 <span>({product.review ?? 0})k</span>
               </div>
@@ -189,7 +199,7 @@ export default function Arrivals() {
                   e.stopPropagation();
                   handleAddToCart(product);
                 }}
-                className="mt-2 w-full py-2 border border-[#e3e9ef] text-(--prim-color) text-xs font-bold rounded bg-[#d3ddec] hover:bg-(--prim-color) hover:text-white transition-all"
+                className="mt-2 w-full py-2 border border-red-100 text-(--prim-color) text-xs font-bold rounded bg-red-50 hover:bg-(--prim-color) hover:text-white transition-all"
               >
                 Add <i className="bi bi-cart3 ml-1"></i>
               </button>

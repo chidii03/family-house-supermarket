@@ -65,7 +65,7 @@ export default function AdminDashboard() {
               <LayoutDashboard className="text-white" size={32} />
             </div>
             <h2 className="text-3xl font-black text-(--prim-color,#6366f1) uppercase tracking-tighter">
-              Steve O HQ
+              Family House HQ
             </h2>
             <p className="mt-2 font-semibold text-white/70">Secure administrative gateway</p>
           </div>
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
               <p className="mt-2 text-xs text-amber-600">
                 Also visit:{" "}
                 <a
-                  href="https://steveobizzstore.onrender.com/api/admin/debug"
+                href="https://familyhousesupermarket.com/api/admin/debug"
                   target="_blank"
                   rel="noreferrer"
                   className="underline font-bold"
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
               <p className="text-sm text-center max-w-sm px-4">
                 Orders appear here after a successful Paystack payment. Check the{" "}
                 <a
-                  href="https://steveobizzstore.onrender.com/api/admin/debug"
+                  href="https://familyhousesupermarket.com/api/admin/debug"
                   target="_blank"
                   rel="noreferrer"
                   className="text-blue-500 underline"
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
                         <div className="flex justify-end gap-2">
                           <button
                             onClick={() => setSelectedOrder(order)}
-                            className="p-2 bg-gray-100 rounded-lg hover:bg-black hover:text-white transition-all"
+                            className="p-2 bg-red-50 text-(--prim-color) rounded-lg hover:bg-(--prim-color) hover:text-white transition-all"
                             title="View details"
                           >
                             <Eye size={16} />

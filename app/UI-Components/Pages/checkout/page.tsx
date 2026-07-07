@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { urlFor } from "@/app/lib/sanity";
+import { brand } from "@/supermarket.config";
 
 type SanityImage = {
   _type: "image";
@@ -122,9 +123,9 @@ export default function Checkout() {
     baseSubtotal + deliveryFee + estimatedTax - discountAmount,
   );
 
-  const applyObizzDiscount = () => {
+  const applyFamilyHouseDiscount = () => {
     const MINIMUM_ORDER = 50000;
-    if (discountCode.trim().toUpperCase() !== "OBIZZ") {
+    if (discountCode.trim().toUpperCase() !== "FAMILY") {
       toast.error("Invalid discount code.");
       return;
     }
@@ -187,12 +188,12 @@ export default function Checkout() {
       lastName: formData.lastName,
       address:
         deliveryOption === "pickup"
-          ? "PICKUP FROM STORE"
+          ? `PICKUP FROM STORE - ${brand.address}`
           : `${formData.address}, ${formData.state}`,
       state: formData.state || "Lagos",
       amount: finalGrandTotal,
       cart: cartItems,
-      discountUsed: isDiscountApplied ? "OBIZZ" : null,
+      discountUsed: isDiscountApplied ? "FAMILY" : null,
       discountAmount: discountAmount,
     };
 
@@ -408,11 +409,11 @@ export default function Checkout() {
                       onChange={(e) =>
                         setDiscountCode(e.target.value.toUpperCase())
                       }
-                      placeholder="Enter Code OBIZZ"
+                      placeholder="Enter Code FAMILY"
                       className="flex-1 border border-gray-300 rounded-lg px-3 py-3 uppercase focus:outline-none"
                     />
                     <button
-                      onClick={applyObizzDiscount}
+                      onClick={applyFamilyHouseDiscount}
                       className="bg-(--prim-color) Unbounded text-white w-full py-2 rounded-lg text-sm font-bold hover:opacity-90 tracking-widest"
                     >
                       Apply

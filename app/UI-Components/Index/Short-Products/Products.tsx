@@ -38,8 +38,8 @@ export default function ShortProducts() {
           }`;
         const data = await sanityFetch<Product[]>(query);
         setProducts(data || []);
-      } catch (error) {
-        console.error("Error fetching Short Products:", error);
+      } catch {
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -115,7 +115,7 @@ export default function ShortProducts() {
 
                         <div className="flex flex-col min-w-0 flex-1">
                           <div className="flex items-center gap-1 mb-1">
-                            <i className="bi bi-star-fill text-yellow-400 text-[10px]"></i>
+                            <i className="bi bi-star-fill text-(--prim-color) text-[10px]"></i>
                             <span className="text-[10px] font-bold text-slate-500">
                               4.8
                             </span>
@@ -129,7 +129,7 @@ export default function ShortProducts() {
                           </h3>
 
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="text-blue-600 font-bold text-[13px] Unbounded">
+                            <span className="text-(--prim-color) font-bold text-[13px] Unbounded">
                               ₦{product.price.toLocaleString()}
                             </span>
                             {product.lessprice > 0 && (

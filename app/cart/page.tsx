@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { urlFor } from "@/app/lib/sanity";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/app/Components/LoadingSpinner";
+import { brand } from "@/supermarket.config";
 
 type SanityImage = {
   _type: "image";
@@ -182,7 +183,7 @@ export default function Cart() {
                     return (
                       <tr
                         key={item._id}
-                        className="hover:bg-gray-50 transition-colors"
+                        className="hover:bg-red-50 transition-colors"
                       >
                         <td className="py-5 px-6 flex items-center gap-4">
                           {/* <Link href={`/product/${item.slug.current}`}> */}
@@ -209,7 +210,7 @@ export default function Cart() {
 
                             <h6 className="text-xs text-gray-400 mt-1 Merienda tracking-tighter">
                               <i className="bi bi-shop text-(--prim-color)"></i>{" "}
-                              By Steve Obizz&apos;s Store
+                              By {brand.name}
                             </h6>
 
                             <span className="flex items-center text-yellow-500 text-sm mt-1">
@@ -229,7 +230,7 @@ export default function Cart() {
                               onClick={() =>
                                 handleQtyChange(item._id, item.qty - 1)
                               }
-                              className="px-3 py-1 hover:bg-gray-100"
+                              className="px-3 py-1 hover:bg-red-50"
                             >
                               -
                             </button>
@@ -242,7 +243,7 @@ export default function Cart() {
                               onClick={() =>
                                 handleQtyChange(item._id, item.qty + 1)
                               }
-                              className="px-3 py-1 hover:bg-gray-100"
+                              className="px-3 py-1 hover:bg-red-50"
                             >
                               +
                             </button>

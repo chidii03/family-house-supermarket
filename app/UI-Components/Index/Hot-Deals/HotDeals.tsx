@@ -42,12 +42,12 @@ export default function HotDeals() {
     const fetchHotDeals = async () => {
       try {
         const query = `*[_type == "product" && isHotDeal == true && isBestSales != true && isbanner != true] | order(HotDealOrder asc, _createdAt desc)[0...40]{
-          _id, name, price, "lessprice": lessPrice, slug, image, review, sale, soldCurrent, soldTotal, HotDealOrder
+          _id, name, price, lessprice, slug, image, review, sale, soldCurrent, soldTotal, HotDealOrder
         }`;
         const data = await sanityFetch<Product[]>(query);
         setProducts(data || []);
-      } catch (error) {
-        console.error("Error fetching hot deals:", error);
+      } catch {
+        setProducts([]);
       } finally {
         setLoading(false);
       }
@@ -70,7 +70,7 @@ export default function HotDeals() {
 
   const handleAddToWishlist = (product: Product) => {
     const wishlist: Product[] = JSON.parse(
-      localStorage.getItem("wishlist") || "[]"
+      localStorage.getItem("wishlist") || "[]",
     );
     const isFavourite = wishlist.find((item) => item._id === product._id);
     if (isFavourite) {
@@ -108,7 +108,7 @@ export default function HotDeals() {
             </h2>
           </div>
           <Link
-            href="/products"
+            href="/ShopAll"
             className="text-(--prim-color) font-bold hover:gap-3 transition-all flex items-center gap-2"
           >
             View All <i className="bi bi-arrow-right"></i>
@@ -333,7 +333,7 @@ export default function HotDeals() {
                             e.stopPropagation();
                             handleAddToCart(product);
                           }}
-                          className="h-12 w-12 rounded-xl bg-(--prim-color) text-white flex items-center justify-center hover:bg-slate-900 transition-all shadow-lg"
+                          className="h-12 w-12 rounded-xl bg-(--prim-color) text-white flex items-center justify-center hover:bg-(--prim-dark) transition-all shadow-lg"
                         >
                           <i className="bi bi-cart3 text-xl"></i>
                         </button>
@@ -357,15 +357,17 @@ export default function HotDeals() {
         }
 
         .best-hotdeals-swiper .swiper-pagination-bullet {
-          background: #d1d5db;
+          background: #d1d5db !important;
           opacity: 1;
           transition: all 0.3s ease;
         }
+
         .best-hotdeals-swiper .swiper-pagination-bullet-active {
-          background: #4b70f5 !important;
+          background: red !important;
           width: 24px;
           border-radius: 5px;
         }
+
         .swiper-button-disabled {
           display: none !important;
         }

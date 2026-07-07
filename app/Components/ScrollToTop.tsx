@@ -33,7 +33,7 @@ export default function ScrollToTop() {
           text-white 
           rounded-full 
           shadow-lg 
-          shadow-blue-500/30
+          shadow-red-500/20
           transition-all duration-300 
           hover:scale-110 hover:-translate-y-1 hover:shadow-xl
           active:scale-95

@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { Timer } from "lucide-react";
 
 export default function FlashSaleTimer() {
-  // Initialize with a target 24 hours from now (or hardcode a specific sale end date)
-  // For this demo, I will make the sale end at Midnight tonight to create urgency
   const calculateTimeLeft = () => {
     const now = new Date();
     const target = new Date();

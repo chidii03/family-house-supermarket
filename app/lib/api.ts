@@ -60,7 +60,6 @@ export const adminLogin = async (password: string) => {
   return res.json();
 };
 
-// FIX: was /admin/orders — must be /api/admin/orders to match app.js route prefix
 export const fetchAdminOrders = async (): Promise<OrderResponse[]> => {
   try {
     const res = await fetch(`${API_URL}/api/admin/orders`);

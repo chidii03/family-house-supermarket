@@ -2,21 +2,18 @@ import Link from "next/link";
 
 export default function Topnav () {
   return (
-    <div className="w-full bg-(--prim-color) text-white text-sm">
-      <div className="flex items-center justify-between py-3 px-[8%] lg:px-[12%] flex-col md:flex-row">
-        <div className="flex space-x-4 flex-wrap" >
-         <Link href="/UI-Components/Pages/about" className="pr-3 border-r-2 border-gray-300 hover:underline">About Us</Link>
-          <Link href="/UI-Components/Pages/checkout" className="pr-3 border-r-2 border-gray-300 hover:underline">Free Delivery</Link>
-           <Link href="/track" className="pr-3 border-gray-300 hover:underline">Track Order</Link>
-
-          
+    <div className="w-full bg-(--prim-color) text-sm text-white border-b border-red-200">
+      <div className="flex items-center justify-between gap-1.5 py-2.5 px-[5%] lg:px-[8%] flex-col md:flex-row max-w-360 mx-auto">
+        <div className="flex space-x-4 flex-wrap justify-center" >
+         <Link href="/UI-Components/Pages/about" className="pr-3 border-r border-white/70 font-semibold hover:text-red-100">About Us</Link>
+          <Link href="/ShopAll" className="pr-3 border-r border-white/70 font-semibold hover:text-red-100">Shop Groceries</Link>
+           <Link href="/track" className="pr-3 border-white/70 font-semibold hover:text-red-100">Track Order</Link>
         </div>
-        <div className="flex space-x-4 flex-wrap">
-            <Link href="/Help" className="pr-3 border-r-2 border-gray-300 hover:underline">Help Center</Link>
-              <Link href="/UI-Components/Pages/contact" className="hover:underline">Returns Policy</Link>
+        <div className="flex space-x-4 flex-wrap justify-center">
+            <Link href="/Help" className="pr-3 border-r border-white/70 font-semibold hover:text-red-100">Help</Link>
+              <Link href="/return-policy" className="font-semibold hover:text-red-100">Return Policy</Link>
        </div>
       </div>
     </div>
   )
 }
-

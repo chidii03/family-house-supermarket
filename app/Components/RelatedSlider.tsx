@@ -6,8 +6,7 @@ import { Navigation } from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "@/app/lib/sanity";
-import "swiper/css";
-import "swiper/css/navigation";
+
 
 interface SanityImage {
   _type: "image";
@@ -40,12 +39,12 @@ export default function RelatedSlider({ title, products }: Props) {
         <div className="flex gap-2">
           {/* Custom Navigation Buttons */}
           <button
-            className={`prev-${id} w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 disabled:opacity-30 transition-all cursor-pointer`}
+            className={`prev-${id} w-8 h-8 flex items-center justify-center rounded-full border border-red-100 text-(--prim-color) hover:bg-red-50 disabled:opacity-30 transition-all cursor-pointer`}
           >
             <i className="bi bi-chevron-left"></i>
           </button>
           <button
-            className={`next-${id} w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 disabled:opacity-30 transition-all cursor-pointer`}
+            className={`next-${id} w-8 h-8 flex items-center justify-center rounded-full border border-red-100 text-(--prim-color) hover:bg-red-50 disabled:opacity-30 transition-all cursor-pointer`}
           >
             <i className="bi bi-chevron-right"></i>
           </button>
@@ -82,13 +81,13 @@ export default function RelatedSlider({ title, products }: Props) {
                   className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <h3 className="text-xs Unbounded lg:text-sm text-blue-700 font-medium line-clamp-2 h-10 group-hover:underline group-hover:text-blue-700">
+              <h3 className="text-xs Unbounded lg:text-sm text-gray-900 font-medium line-clamp-2 h-10 group-hover:underline group-hover:text-(--prim-color)">
                 {item.name}
               </h3>
 
               <div className="mt-1">
                 <div className="flex items-center gap-1 mb-1">
-                  <div className="flex text-yellow-400 text-[10px]">
+                  <div className="flex text-(--prim-color) text-[10px]">
                     {[...Array(5)].map((_, i) => (
                       <i key={i} className="bi bi-star-fill"></i>
                     ))}

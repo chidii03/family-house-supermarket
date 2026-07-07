@@ -1,16 +1,47 @@
 // src/lib/sanity.ts
-import sanityClient from '@sanity/client';
+import createClient from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
-// Use the default export (not named)
-export const client = sanityClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  apiVersion: '2025-07-05',
-  useCdn:false,
-  token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-07-05";
+
+const serverClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false,
+  token: process.env.SANITY_API_READ_TOKEN || process.env.NEXT_PUBLIC_SANITY_TOKEN,
 });
+
+async function browserFetch<T>(
+  query: string,
+  params: Record<string, unknown> = {}
+): Promise<T> {
+  const response = await fetch("/api/sanity", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query, params }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Unable to load Sanity content");
+  }
+
+  const payload = (await response.json()) as { data: T };
+  return payload.data;
+}
+
+export const client = {
+  fetch<T = unknown>(query: string, params: Record<string, unknown> = {}) {
+    if (typeof window !== "undefined") {
+      return browserFetch<T>(query, params);
+    }
+
+    return serverClient.fetch<T>(query, params);
+  },
+};
 
 // Strongly typed fetch helper
 export async function sanityFetch<T>(
@@ -21,6 +52,6 @@ export async function sanityFetch<T>(
 }
 
 // Properly typed urlFor
-const builder = imageUrlBuilder(client);
+const builder = imageUrlBuilder({ projectId, dataset });
 export const urlFor = (source: SanityImageSource) =>
   builder.image(source);

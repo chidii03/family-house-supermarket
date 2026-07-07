@@ -37,16 +37,16 @@ export default async function ShopAll() {
   const estimates = getDeliveryEstimates(); // Use the fixed function
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-20">
+    <div className="bg-[#f7f8f4] min-h-screen pb-20">
       
       {/* --- HEADER & DELIVERY INFO --- */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div className="bg-white border-b border-black/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             
             {/* Title */}
             <div>
-              <h1 className="text-3xl font-black text-gray-900 Unbounded uppercase tracking-tight">
+              <h1 className="text-3xl font-black text-gray-900 uppercase tracking-tight">
                 Shop All
               </h1>
               <p className="text-sm text-gray-500 mt-1 flex items-center gap-2">
@@ -56,8 +56,8 @@ export default async function ShopAll() {
             </div>
 
             {/* Delivery Banner (Using Fixed Logic) */}
-            <div className="bg-gray-100 rounded-xl p-3 flex items-center gap-3 border border-gray-200">
-              <div className="bg-white p-2 rounded-lg shadow-sm text-(--prim-color)">
+            <div className="bg-[#fff8df] rounded-lg p-3 flex items-center gap-3 border border-red-100">
+              <div className="bg-white p-2 rounded-md shadow-sm text-(--prim-color)">
                 <Truck className="w-5 h-5" />
               </div>
               <div className="text-xs md:text-sm">

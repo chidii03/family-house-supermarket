@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { getDeliveryEstimates } from "@/app/utils/deliveryDate";
 import Image from "next/image";
+import { brand } from "@/supermarket.config";
 
 // --- Types ---
 type SanityImage = {
@@ -99,7 +100,7 @@ const handleAddToCart = (isBuyNow = false) => {
 };
 
   return (
-    <div className="border border-gray-200 rounded-2xl p-4 lg:p-6 shadow-lg bg-white sticky top-24">
+    <div className="border border-red-100 rounded-2xl p-4 lg:p-6 shadow-lg bg-white sticky top-24">
       <h3 className="text-2xl font-black text-gray-900 mb-2 ">
         ₦{product.price.toLocaleString()}
       </h3>
@@ -122,7 +123,7 @@ const handleAddToCart = (isBuyNow = false) => {
             <i className="bi bi-geo-alt-fill text-(--prim-color)"></i>
             <span>
               Delivering from{" "}
-              <span className="font-bold text-black">Nigeria</span> (Steve Obizz Store)
+              <span className="font-bold text-black">Ikotun, Lagos</span> ({brand.shortName})
             </span>
           </div>
         </div>
@@ -138,7 +139,7 @@ const handleAddToCart = (isBuyNow = false) => {
             <button
               type="button"
               onClick={() => handleQtyChange(qty - 1)}
-              className="px-3 py-2 hover:bg-gray-100 text-lg transition-colors flex-1 sm:flex-none"
+              className="px-3 py-2 hover:bg-red-50 text-lg transition-colors flex-1 sm:flex-none"
             >
               -
             </button>
@@ -148,7 +149,7 @@ const handleAddToCart = (isBuyNow = false) => {
             <button
               type="button"
               onClick={() => handleQtyChange(qty + 1)}
-              className="px-3 py-2 hover:bg-gray-100 text-lg transition-colors flex-1 sm:flex-none"
+              className="px-3 py-2 hover:bg-red-50 text-lg transition-colors flex-1 sm:flex-none"
             >
               +
             </button>
@@ -159,7 +160,7 @@ const handleAddToCart = (isBuyNow = false) => {
         <div className="space-y-3">
           <button
             onClick={() => handleAddToCart(false)}
-            className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-full shadow-md transition-all active:scale-95 text-xs sm:text-sm uppercase tracking-wide"
+            className="w-full bg-white hover:bg-red-50 text-(--prim-color) border border-red-100 font-bold py-3 rounded-full shadow-sm transition-all active:scale-95 text-xs sm:text-sm uppercase tracking-wide"
           >
             Add to Cart
           </button>
@@ -174,20 +175,20 @@ const handleAddToCart = (isBuyNow = false) => {
 
         {/* WhatsApp Chat Button - RESPONSIVE UPDATE */}
         <a
-          href={`https://wa.me/2348033048352?text=Hi, I have a question about ${product.name}`}
+          href={`https://wa.me/${brand.whatsapp}?text=Hi, I have a question about ${encodeURIComponent(product.name)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full border border-green-600 text-green-700 font-bold py-1 rounded-full hover:bg-green-50 transition-colors whitespace-nowrap uppercase tracking-wide"
         >
           <i className="bi bi-whatsapp text-2xl"></i>
-          <span> Supplier</span>
+          <span>Chat with us</span>
         </a>
       </div>
 
       <div className="mt-6 text-xs text-gray-500 space-y-2 border-t border-gray-100 pt-4">
         <div className="flex justify-between flex-wrap gap-1">
           <span>Delivery from</span>
-          <span className="font-bold text-gray-900">Steve O Bizz Store</span>
+          <span className="font-bold text-gray-900">{brand.name}</span>
         </div>
         <div className="flex justify-between flex-wrap gap-1">
           <span>Returns</span>

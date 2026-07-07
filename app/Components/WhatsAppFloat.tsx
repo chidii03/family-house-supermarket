@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { brand } from "@/supermarket.config";
 
 export default function WhatsAppFloat() {
-  const whatsappNumber = "2348033048352";
-  const message = "Hello Steve O Bizz Store, I would like to make an inquiry.";
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const message = `Hello ${brand.name}, I would like to make an inquiry.`;
+  const whatsappLink = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(message)}`;
 
   return (
     <div className="fixed bottom-6 right-6 z-9999 group xl:hidden ">

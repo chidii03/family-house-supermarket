@@ -48,10 +48,10 @@ export default function BestSales() {
           _id, name, price, lessprice, slug, image, review, sale, soldCurrent, soldTotal, HotDealOrder
         }`;
         const data = await sanityFetch<Product[]>(query);
-        setProducts(data);
-      } catch (error) {
-        console.error("Sanity Fetch Error:", error);
-      } finally {
+        setProducts(data || []);
+    } catch {
+      setProducts([]);
+    } finally {
         setLoading(false);
       }
     }
@@ -86,12 +86,13 @@ export default function BestSales() {
     }
   };
 
-  if (loading || products.length === 0)
+  if (loading)
     return (
       <div className="py-20 text-center font-bold">
         <LoadingSpinner />
       </div>
     );
+  if (products.length === 0) return null;
 
   const featuredProduct = products[0];
   const sliderItems = products.slice(1);
@@ -245,7 +246,7 @@ export default function BestSales() {
                 e.stopPropagation();
                 handleAddToWishlist(product);
               }}
-              className="absolute top-3 right-3 z-20 p-2 bg-white rounded-full text-slate-400 hover:text-black border border-gray-100 shadow-sm active:scale-90"
+              className="absolute top-3 right-3 z-20 p-2 bg-white rounded-full text-slate-400 hover:text-(--prim-color) border border-red-100 shadow-sm active:scale-90"
             >
               <Heart size={16} />
             </button>
@@ -284,7 +285,7 @@ export default function BestSales() {
                   e.stopPropagation();
                   handleAddToCart(product);
                 }}
-                className="w-full relative z-20 py-3.5 bg-transparent border-2 border-black text-black rounded-xl font-black text-[10px] tracking-widest flex items-center justify-center gap-2 transition-all hover:bg-black hover:text-white"
+                className="w-full relative z-20 py-3.5 bg-transparent border-2 border-red-100 text-(--prim-color) rounded-xl font-black text-[10px] tracking-widest flex items-center justify-center gap-2 transition-all hover:bg-red-50"
               >
                 <ShoppingCart size={14} /> ADD TO CART
               </button>
@@ -301,7 +302,7 @@ export default function BestSales() {
           margin-top: 6px;
         }
         .best-sales-swiper .swiper-pagination-bullet {
-          background: #d1d5db;
+          background: #d1d5db !important;
           opacity: 1;
           transition: all 0.3s ease;
         }

@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "@/app/lib/sanity";
@@ -23,51 +24,53 @@ interface ProductProps {
 }
 
 export default function ProductCard({ product }: ProductProps) {
-  const discount = product.lessprice 
-    ? Math.round(((product.lessprice - product.price) / product.lessprice) * 100) 
+  const discount = product.lessprice
+    ? Math.round(((product.lessprice - product.price) / product.lessprice) * 100)
     : 0;
 
   return (
-    <Link href={`/product/${product.slug.current}`} className="group block bg-white h-full">
-      <div className="relative aspect-square bg-[#F7F7F7] rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-2xl">
-        {/* Badge */}
+    <Link
+      href={`/product/${product.slug.current}`}
+      className="group block h-full rounded-lg border border-red-100 bg-white p-2 transition-all hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(215,25,32,0.1)]"
+    >
+      <div className="relative aspect-square overflow-hidden rounded-md bg-red-50/60">
         {discount > 0 && (
-          <span className="absolute top-3 left-3 z-10 bg-black text-white text-[10px] font-black Unbounded px-2 py-1 rounded-full">
+          <span className="absolute left-3 top-3 z-10 rounded-md bg-(--prim-color) px-2 py-1 text-[10px] font-black text-white">
             -{discount}%
           </span>
         )}
-        
-        {/* Image */}
-        <div className="relative w-full h-full">
-           <Image
+
+        {product.image?.[0] ? (
+          <Image
             src={urlFor(product.image[0]).url()}
             alt={product.name}
             fill
             className="object-contain p-5 transition-transform duration-700 group-hover:scale-110"
           />
-        </div>
+        ) : (
+          <div className="flex h-full items-center justify-center text-xs font-bold text-gray-400">
+            No Image
+          </div>
+        )}
 
-        {/* Quick Add Overlay (Glassmorphism) */}
-        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
-          <button className="bg-white/80 backdrop-blur-sm text-black px-4 py-2 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-            <i className="bi bi-bag-plus-fill text-lg"></i>
-          </button>
+        <div className="absolute inset-0 flex items-end justify-center bg-black/5 pb-4 opacity-0 transition-opacity group-hover:opacity-100">
+          <span className="translate-y-4 rounded-md bg-white/90 px-4 py-2 text-(--prim-color) shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover:translate-y-0">
+            <i className="bi bi-basket2-fill text-lg"></i>
+          </span>
         </div>
       </div>
 
-      <div className="mt-3 px-1">
-        {/* Title - Truncated to 1 line to prevent breaking */}
-        <h3 className="text-[11px] md:text-[13px] font-bold text-gray-900 Unbounded uppercase truncate tracking-tight">
+      <div className="px-1 pb-2 pt-3">
+        <h3 className="min-h-9 text-[11px] md:text-[13px] font-bold text-gray-950 uppercase line-clamp-2 tracking-tight">
           {product.name}
         </h3>
-        
-        {/* Price Section */}
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-[14px] md:text-[16px] font-black text-(--prim-color) Unbounded">
+
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <span className="text-[14px] md:text-[16px] font-black text-(--prim-color)">
             ₦{product.price.toLocaleString()}
           </span>
           {product.lessprice && (
-            <span className="text-[10px] md:text-[12px] text-gray-400 font-bold line-through">
+            <span className="text-[10px] md:text-[12px] font-bold text-gray-400 line-through">
               ₦{product.lessprice.toLocaleString()}
             </span>
           )}

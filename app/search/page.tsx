@@ -58,7 +58,7 @@ const SortOption = ({ label, value, currentSort, query }: SortOptionProps) => {
       className={`block px-4 py-2 text-sm ${
         active
           ? "bg-(--prim-color) text-white"
-          : "text-gray-700 hover:bg-gray-100"
+          : "text-gray-700 hover:bg-red-50 hover:text-(--prim-color)"
       }`}
     >
       {label}
@@ -183,7 +183,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   <Link
                     href={`/search?q=${query}&rating=${star}`}
                     key={star}
-                    className="flex items-center hover:bg-gray-50 p-1 rounded transition-colors group"
+                    className="flex items-center hover:bg-red-50 p-1 rounded transition-colors group"
                   >
                     <div className="flex text-yellow-400">
                       {[...Array(5)].map((_, i) => (
@@ -331,7 +331,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                         <div className="mt-auto">
                           <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
                             <Truck className="w-4 h-4" />
-                            <span>Free Delivery by Steve O&apos;Bizz</span>
+                            <span>Free Delivery by Family House SuperMarket</span>
                           </div>
 
                           {/* REPLACED THE BUTTON HERE WITH CLIENT COMPONENT */}

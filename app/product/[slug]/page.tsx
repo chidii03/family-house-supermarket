@@ -167,16 +167,16 @@ export default async function ProductPage({ params }: Props) {
         {/* SLIDERS SECTION - Using the Shuffled Arrays */}
         <div className="space-y-16">
           <RelatedSlider
-            title="Customers who bought this item also bought"
+            title="Frequently bought together"
             products={alsoBought}
           />
 
           <RelatedSlider
-            title="Inspired by your browsing history"
+            title="More supermarket picks"
             products={browsingHistory}
           />
 
-          <RelatedSlider title="Recommended for you" products={recommended} />
+          <RelatedSlider title="Recommended essentials" products={recommended} />
         </div>
       </main>
     </div>

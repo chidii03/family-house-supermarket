@@ -148,13 +148,13 @@ export default function HelpPage() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-blue-950 py-24 border-b border-blue-800">
+      <div className="relative overflow-hidden bg-red-950 py-24 border-b border-red-800">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-blue-900 via-blue-950 to-slate-900"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-red-900 via-red-950 to-slate-900"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 text-center z-10">
           <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter mb-6 text-white">
-            How Can We <span className="text-blue-400">Help You?</span>
+            How Can We <span className="text-red-400">Help You?</span>
           </h1>
           <p className="text-blue-100 max-w-2xl mx-auto font-light">
             Find answers to common questions about delivery, payments, and
@@ -205,16 +205,16 @@ export default function HelpPage() {
               </div>
 
               {/* Quick Contact Box in Sidebar */}
-              <div className="mt-8 p-4 bg-blue-50 rounded-xl">
-                <p className="text-sm font-semibold text-blue-800 mb-2">
+              <div className="mt-8 p-4 bg-red-50 rounded-xl">
+                <p className="text-sm font-semibold text-red-800 mb-2">
                   Can&apos;t find answer?
                 </p>
-                <p className="text-xs text-blue-600 mb-3">
+                <p className="text-xs text-red-600 mb-3">
                   Our team is here to help.
                 </p>
                 <Link
                   href="/contact"
-                  className="text-xs font-bold text-blue-700 underline"
+                  className="text-xs font-bold text-red-700 underline"
                 >
                   Contact Support &rarr;
                 </Link>
@@ -361,11 +361,11 @@ export default function HelpPage() {
                 <Mail className="w-6 h-6" />
               </div>
               <h4 className="font-bold text-gray-900 mb-1">Email Us</h4>
-              <p className="text-sm text-gray-500">steveobizz@yahoo.com</p>
+              <p className="text-sm text-gray-500">familyhousesupermarket@gmail.com</p>
             </a>
 
             <a
-              href="https://wa.me/2348033048352"
+              href="https://wa.me/2347044012151"
               className="group p-6 rounded-2xl bg-gray-50 hover:bg-green-50 transition-colors border border-gray-100 hover:border-green-100"
             >
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-green-600 mx-auto mb-4 group-hover:scale-110 transition-transform">

@@ -102,8 +102,8 @@ const SearchBar = ({ variant = 'desktop' }: SearchBarProps) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const results: any = await client.fetch(groqQuery);
       setSuggestions(results);
-    } catch (error) {
-      console.error("Search Error:", error);
+    } catch {
+      setSuggestions([]);
     } finally {
       setIsLoading(false);
     }
@@ -148,8 +148,8 @@ const SearchBar = ({ variant = 'desktop' }: SearchBarProps) => {
           
           {/* --- DESKTOP INPUT --- */}
           {variant === 'desktop' && (
-             <div className={`hidden md:flex relative w-full items-center bg-white border-2 rounded-2xl overflow-hidden transition-colors
-               ${isOpen ? 'border-(--prim-color)  rounded-2xl' : 'border-gray-200'}
+             <div className={`hidden md:flex relative w-full items-center bg-white border-2 rounded-2xl overflow-hidden transition-colors shadow-sm
+               ${isOpen ? 'border-(--prim-color)' : 'border-red-100'}
              `}>
                 <div className="pl-4 text-gray-400">
                   {isLoading ? <Loader2 className="animate-spin w-5 h-5 text-(--prim-color)" /> : <Search className="w-5 h-5" />}
@@ -163,7 +163,7 @@ const SearchBar = ({ variant = 'desktop' }: SearchBarProps) => {
                   className="w-full py-3 px-3 text-gray-900 placeholder-gray-500 outline-none bg-transparent"
                   autoComplete="off"
                 />
-                 <button type="submit" className="bg-(--prim-color) hover:opacity-90 text-white px-8 py-3 font-bold transition-all">
+                 <button type="submit" className="bg-(--prim-color) hover:bg-(--prim-dark) text-white px-8 py-3 font-bold transition-all">
                   Search
                 </button>
              </div>
@@ -201,7 +201,7 @@ const SearchBar = ({ variant = 'desktop' }: SearchBarProps) => {
                   <li key={product._id} className="border-b border-gray-50 last:border-none">
                     <Link 
                       href={`/product/${product.slug.current}`}
-                      className={`flex items-center justify-between px-4 py-3.5 hover:bg-gray-50 transition-colors
+                      className={`flex items-center justify-between px-4 py-3.5 hover:bg-red-50 transition-colors
                         ${index === activeIndex ? 'bg-gray-100' : ''}`}
                       onClick={() => setIsOpen(false)}
                     >

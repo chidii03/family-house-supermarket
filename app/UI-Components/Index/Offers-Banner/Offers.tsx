@@ -26,17 +26,21 @@ export default function Offers() {
 
   useEffect(() => {
     const fetchOffers = async () => {
-      const query = `*[_type == "product" && isBestOffer == true && isHotDeal != true]
-        | order(_createdAt desc)[0...2]{
-          _id,
-          name,
-          ctg,
-          image,
-          slug,
-        }`;
+      try {
+        const query = `*[_type == "product" && isBestOffer == true && isHotDeal != true]
+          | order(_createdAt desc)[0...2]{
+            _id,
+            name,
+            ctg,
+            image,
+            slug,
+          }`;
 
-      const data = await sanityFetch<OfferProduct[]>(query);
-      setOffers(data || []);
+        const data = await sanityFetch<OfferProduct[]>(query);
+        setOffers(data || []);
+      } catch {
+        setOffers([]);
+      }
     };
 
     fetchOffers();
@@ -45,14 +49,14 @@ export default function Offers() {
   return (
     <div className="px-[5%] lg:px-[8%] mb-12">
       <div className="flex flex-col lg:flex-row gap-5">
-        {offers.map((offer, index) => (
+        {offers.map((offer) => (
           <Link
             key={offer._id}
             href={`/product/${offer.slug.current}`}
             className={`offer-wrap relative flex items-center justify-between w-full h-64
               rounded-3xl p-8 overflow-hidden cursor-pointer
               transition-transform hover:scale-[1.01]
-              ${index === 0 ? "bg-[#f1f1f1]" : "bg-[#e2faff]"}`}
+              bg-white border border-red-100 shadow-[0_18px_45px_rgba(215,25,32,0.08)]`}
           >
             {/* TEXT CONTENT */}
             <div className="z-10 flex flex-col justify-center max-w-[55%]">
@@ -66,7 +70,7 @@ export default function Offers() {
 
               <button
                 onClick={(e) => e.stopPropagation()}
-                className="w-fit px-6 py-2 rounded-full text-white font-bold bg-black hover:bg-white hover:text-black border transition-all text-sm shadow-sm"
+                className="w-fit px-6 py-2 rounded-lg text-white font-bold bg-(--prim-color) hover:bg-(--prim-dark) border border-(--prim-color) transition-all text-sm shadow-sm"
               >
                 Shop Now →
               </button>

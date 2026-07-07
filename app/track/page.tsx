@@ -63,7 +63,7 @@ export default function TrackOrder() {
           <button
             onClick={handleTrack}
             disabled={loading}
-            className="w-full bg-black text-white py-4 rounded-2xl font-bold text-sm hover:bg-gray-800 active:scale-95 transition-all disabled:opacity-50"
+            className="w-full bg-(--prim-color) text-white py-4 rounded-2xl font-bold text-sm hover:bg-(--prim-dark) active:scale-95 transition-all disabled:opacity-50"
           >
             {loading ? "Locating…" : "Track Package"}
           </button>
@@ -83,7 +83,7 @@ export default function TrackOrder() {
             onClick={handleTrack}
             disabled={loading}
             /* min-w ensures button never collapses on medium screens */
-            className="shrink-0 min-w-27.5 bg-black text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-gray-800 active:scale-95 transition-all disabled:opacity-50 whitespace-nowrap"
+            className="shrink-0 min-w-27.5 bg-(--prim-color) text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-(--prim-dark) active:scale-95 transition-all disabled:opacity-50 whitespace-nowrap"
           >
             {loading ? "Locating…" : "Track"}
           </button>
