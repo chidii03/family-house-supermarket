@@ -104,7 +104,7 @@ export default function ReturnPolicy() {
         <Section icon={RefreshCw} title="How to Initiate a Return">
           <ol className="space-y-6">
             {[
-              { step: "1", title: "Contact Support", desc: "Email us at steveobizz@yahoo.com or WhatsApp us within 7 days of delivery. Include your Order ID and reason for return." },
+              { step: "1", title: "Contact Support", desc: "Email us at familyhousesupermarket@gmail.com or WhatsApp us within 7 days of delivery. Include your Order ID and reason for return." },
               { step: "2", title: "Receive Approval", desc: "Our team will review your request within 24–48 hours and send a Return Merchandise Authorisation (RMA) number if approved." },
               { step: "3", title: "Ship the Item", desc: "Pack the item securely in its original packaging and ship to the address provided. Include your RMA number on the outside of the package." },
               { step: "4", title: "Inspection & Refund", desc: "Once we receive and inspect the item (2–3 business days), we will process your refund or exchange within 5–10 business days." },

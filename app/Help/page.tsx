@@ -93,28 +93,7 @@ export default function HelpPage() {
       id: 8,
       question: "Can I customize my order?",
       answer:
-        "Yes, we offer customization services for corporate branding on items like notebooks, pens, and office supplies. Minimum order quantities apply. Contact our customization team on What's App +234 803 304 8352 for quotes and samples.",
-      category: "products",
-    },
-    {
-      id: 9,
-      question: "What are your business hours?",
-      answer:
-        "Our store is open Monday, Tuesday, Wednesday, Friday from 7:00 AM to 7:00 PM, and Saturdays, Thurdays from 10:00 AM to 7:00 PM. Online orders can be placed 24/7 through our website.",
-      category: "products", 
-    },
-    {
-      id: 10,
-      question: "How do I apply for a warranty claim?",
-      answer:
-        "For warranty claims, please contact us with your order number and photos/videos of the issue. Most products come with 1-year manufacturer warranty. We will guide you through the claim process and arrange repairs or replacement.",
-      category: "returns",
-    },
-    {
-      id: 11,
-      question: "Do you offer installation services?",
-      answer:
-        "Yes, we offer installation and setup services for office furniture, printers, and electronics. This service is available for purchases above ₦50,000 within Lagos. Contact us to schedule installation.",
+        "Yes, we offer customization services for corporate branding on items like Beverages, skin care products, and house hold supplies. Minimum order quantities apply. Contact our customization team on What's App +234 704 401 2151 for quotes and samples.",
       category: "products",
     },
   ];
@@ -343,14 +322,14 @@ export default function HelpPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             <a
-              href="tel:+2348033048352"
+              href="tel:+2347044012151"
               className="group p-6 rounded-2xl bg-gray-50 hover:bg-primary-50 transition-colors border border-gray-100 hover:border-primary-100"
             >
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-purple-600 mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <Phone className="w-6 h-6" />
               </div>
               <h4 className="font-bold text-gray-900 mb-1">Call Us</h4>
-              <p className="text-sm text-gray-500">+234 803 304 8352</p>
+              <p className="text-sm text-gray-500">+234 704 401 2151</p>
             </a>
 
             <a
