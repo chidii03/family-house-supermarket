@@ -1,6 +1,6 @@
 // app/lib/api.ts
 export const API_URL =
-  (process.env.NEXT_PUBLIC_API_URL || "https://steveobizzstore.onrender.com").replace(/\/$/, "");
+  (process.env.NEXT_PUBLIC_API_URL ||  "https://family-house-supermarket-backend-production.up.railway.app").replace(/\/$/, "");
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 export interface OrderData {

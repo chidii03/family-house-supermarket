@@ -32,26 +32,26 @@ export async function POST(req) {
     });
 
     const mailOptions = {
-      from: `"Steve Obizz Store Team" <${process.env.EMAIL_USER}>`,
+      from: `"Family House SuperMarket" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Welcome to Steve-Obizz-Store!',
+      subject: 'Welcome to Family House SuperMarket!',
       html: `
         <html>
           <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; padding: 20px; margin: 0;">
             <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-              <h2 style="text-align: center; color: #4b70f5;">Welcome to Steve-Obizz-Store!</h2>
+              <h2 style="text-align: center; color: #4b70f5;">Welcome to Family House SuperMarket!</h2>
               <p style="font-size: 16px; line-height: 1.6;">Dear New Customer,</p>
               <p style="font-size: 16px; line-height: 1.6;">
                 We are genuinely delighted to welcome you to the Steve-Obizz-Store. Your subscription marks the beginning of an exciting journey, and we couldn't be more thrilled to have you join us.
               </p>
               <div style="margin-top: 20px; text-align: center;">
-                <img src="https://images.unsplash.com/photo-1677530410699-f692c94cf806?w=600&amp;auto=format&amp;fit=crop&amp;q=60&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3RhdGlvbmVyeSUyMHVpJTIwaW1hZ2VzJTIwcHJvZHVjdHN8ZW58MHx8MHx8fDA%3D" alt="Premium stationery" style="width: 100%; max-width: 500px; border-radius: 10px;">
+                <img src="https://plus.unsplash.com/premium_photo-1661381007965-b21e0fb0681b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHN1cGVybWFya2V0fGVufDB8fDB8fHww" alt="Premium stationery" style="width: 100%; max-width: 500px; border-radius: 10px;">
               </div>
               <p style="font-size: 16px; line-height: 1.6;">
-                As a valued member, you can look forward to receiving carefully curated content, exclusive offers, and first access to our latest product launches—directly in your inbox. Our goal is to enrich your experience, bringing you not only premium stationery but also creative inspiration that elevates your day-to-day.
+                As a valued member, you can look forward to receiving carefully curated content, exclusive offers, and first access to our latest product launches—directly in your inbox. Our goal is to enrich your experience, bringing you not only premium Supplies but also creative inspiration that elevates your day-to-day.
               </p>
               <div style="margin-top: 20px; text-align: center;">
-                <img src="https://media.istockphoto.com/id/2167050759/photo/matching-colors-of-pen-scalpel-screwdriver-pencil-sharpener-and-3m-post-it-sticky-notes-a.jpg?s=612x612&w=0&k=20&c=z-FfG2r56YsiFLxDuWJYPgXbEWhYek7-qWUL5A6VLF8=" alt="Office supplies" style="width: 100%; max-width: 500px; border-radius: 10px;">
+                <img src="https://images.unsplash.com/photo-1670684684445-a4504dca0bbc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c3VwZXJtYXJrZXR8ZW58MHx8MHx8fDA%3D" alt="Office supplies" style="width: 100%; max-width: 500px; border-radius: 10px;">
               </div>
               <p style="font-size: 16px; line-height: 1.6;">
                 Your welcome email has been sent to ${email}.
@@ -60,12 +60,12 @@ export async function POST(req) {
                 With each communication, we aim to bring you closer to products that embody the highest standards of quality, craftsmanship, and innovation. Whether you are seeking practical solutions, elegant designs, or unique gifts, we’re committed to ensuring that your time with us is nothing short of exceptional.
               </p>
               <div style="margin-top: 20px; text-align: center;">
-                <a href="https://steveobizzstore.vercel.app" style="display: inline-block; background-color: #4b70f5; color: white; padding: 12px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Shop Now</a>
+                <a href="https://family-house-supermarket.com" style="display: inline-block; background-color: #4b70f5; color: white; padding: 12px 20px; border-radius: 5px; text-decoration: none; font-weight: bold;">Shop Now</a>
               </div>
               <footer style="margin-top: 30px; text-align: center; font-size: 14px; color: #666;">
-                <p>Warm regards,<br>The Steve-Obizz-Store Team</p>
-                <p>No 69 Obafemi Awolowo Way, Ikeja, Lagos, Nigeria</p>
-                <p>+234 803 304 8352<br>${process.env.EMAIL_USER}</p>
+                <p>Warm regards,<br>The Family House SuperMarket Team</p>
+                <p>198C Governor's Road, Ikotun, Lagos, Nigeria</p>
+                <p>+234 704 401 2151<br>${process.env.EMAIL_USER}</p>
               </footer>
             </div>
           </body>

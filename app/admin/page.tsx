@@ -127,18 +127,6 @@ export default function AdminDashboard() {
             <div>
               <p className="font-bold mb-1">Orders not showing?</p>
               <p>{fetchError}</p>
-              <p className="mt-2 text-xs text-amber-600">
-                Also visit:{" "}
-                <a
-                href="https://familyhousesupermarket.com/api/admin/debug"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline font-bold"
-                >
-                  /api/admin/debug
-                </a>{" "}
-                to see raw database rows.
-              </p>
             </div>
           </div>
         )}
@@ -173,16 +161,7 @@ export default function AdminDashboard() {
               <Package size={40} className="opacity-30" />
               <p className="font-bold">No orders yet</p>
               <p className="text-sm text-center max-w-sm px-4">
-                Orders appear here after a successful Paystack payment. Check the{" "}
-                <a
-                  href="https://familyhousesupermarket.com/api/admin/debug"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-500 underline"
-                >
-                  debug endpoint
-                </a>{" "}
-                to verify database connectivity.
+                Orders appear here after a successful Paystack payment.
               </p>
             </div>
           ) : (
