@@ -63,7 +63,8 @@ export default function AboutPage() {
             <Image
               src="/about/brand/about-hero.jpeg"
               alt="Family House Supermarket"
-              fill
+              width={500}
+              height={600}
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -169,7 +170,8 @@ export default function AboutPage() {
             <Image
               src="/about/brand/about1.jpeg"
               alt="Grocery aisle"
-              fill
+              width={500}
+              height={600}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition duration-500 hover:scale-105"
             />
@@ -179,7 +181,8 @@ export default function AboutPage() {
             <Image
               src="/about/brand/about2.jpeg"
               alt="Personal care section"
-              fill
+              width={500}
+              height={600}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition duration-500 hover:scale-105"
             />
@@ -189,7 +192,8 @@ export default function AboutPage() {
             <Image
               src="/about/brand/about3.jpeg"
               alt="Family House Supermarket"
-              fill
+              width={500}
+              height={600}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition duration-500 hover:scale-105"
             />

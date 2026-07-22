@@ -121,7 +121,8 @@ const Newsletter = () => {
                 <Image
                   src="https://images.unsplash.com/photo-1670684684445-a4504dca0bbc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c3VwZXJtYXJrZXR8ZW58MHx8MHx8fDA%3D"
                   alt="Fresh groceries and household essentials"
-                  fill
+                  width={500}
+                  height={600}
                   priority
                   sizes="40vw"
                   className="object-cover transition duration-500 hover:scale-105"
