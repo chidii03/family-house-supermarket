@@ -42,7 +42,7 @@ export async function POST(req) {
               <h2 style="text-align: center; color: #4b70f5;">Welcome to Family House SuperMarket!</h2>
               <p style="font-size: 16px; line-height: 1.6;">Dear New Customer,</p>
               <p style="font-size: 16px; line-height: 1.6;">
-                We are genuinely delighted to welcome you to the Steve-Obizz-Store. Your subscription marks the beginning of an exciting journey, and we couldn't be more thrilled to have you join us.
+                We are genuinely delighted to welcome you to the Family House SuperMarket! Your subscription marks the beginning of an exciting journey, and we couldn't be more thrilled to have you join us.
               </p>
               <div style="margin-top: 20px; text-align: center;">
                 <img src="https://plus.unsplash.com/premium_photo-1661381007965-b21e0fb0681b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHN1cGVybWFya2V0fGVufDB8fDB8fHww" alt="Premium stationery" style="width: 100%; max-width: 500px; border-radius: 10px;">

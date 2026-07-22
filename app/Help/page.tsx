@@ -38,63 +38,64 @@ export default function HelpPage() {
   const faqs = [
     {
       id: 1,
-      question: "How long does delivery take within Lagos?",
+      question: "Do you deliver groceries within Lagos?",
       answer:
-        "We offer same-day delivery for orders placed before 12 PM within Ikeja and mainland Lagos. For other parts of Lagos, delivery takes 24-48 hours. Express delivery options are available at checkout.",
-      category: "shipping",
+        "Yes. We offer fast and reliable delivery across Lagos. Same-day delivery is available for orders placed before 2:00 PM in selected areas, while other locations are delivered within 24 hours.",
+      category: "delivery",
       popular: true,
     },
     {
       id: 2,
       question: "What payment methods do you accept?",
       answer:
-        "We accept multiple payment methods: Bank transfers, credit/debit cards (Visa, MasterCard), Paystack, and cash on delivery for orders below ₦100,000. Corporate clients can request invoice-based payments.",
-      category: "ordering",
+        "We accept bank transfers, Visa and Mastercard debit/credit cards, Paystack, and cash on delivery for eligible orders. All online payments are processed securely.",
+      category: "payments",
       popular: true,
     },
     {
       id: 3,
-      question: "Do you offer bulk discounts for corporate orders?",
+      question: "Do you have a bakery section?",
       answer:
-        "Yes! We offer special pricing for corporate and bulk orders. For orders above ₦50,000, you get up to 2% discount. Contact our corporate sales team at corporate@steveobizz@yahoo.com for customized quotes.",
-      category: "ordering",
+        "Yes. Our bakery offers a delicious selection of freshly baked bread, cakes, pastries, meat pies, doughnuts, cookies, cupcakes, and other baked treats prepared daily. We also accept orders for birthday cakes, celebration cakes, and other special occasions.",
+      category: "products",
+      popular: true,
     },
     {
       id: 4,
-      question: "What is your return policy?",
+      question: "Can I return or exchange a product?",
       answer:
-        "We accept returns within 14 days of delivery for unused products in original packaging. Defective items are covered by manufacturer warranty and can be exchanged within 30 days. Some items like printers and electronics have specific return conditions.",
+        "Yes. Unopened, non-perishable products can be returned or exchanged within 7 days with proof of purchase. If you receive a damaged, expired, or incorrect item, we'll replace it or issue a refund promptly.",
       category: "returns",
       popular: true,
     },
     {
       id: 5,
-      question: "How do I track my order?",
+      question: "How can I track my order?",
       answer:
-        'Once your order is shipped, you will receive a tracking number via SMS and email. You can track your order status on our website under "Track Orders Page" or contact our customer service for real-time updates.',
-      category: "shipping",
+        "After your order has been confirmed, you'll receive updates via SMS or email. You can also contact our customer support team for the latest delivery status.",
+      category: "delivery",
     },
     {
       id: 6,
-      question: "Do you ship outside Lagos?",
+      question: "Do you sell products in bulk?",
       answer:
-        "Yes, we ship nationwide across Nigeria. Delivery times vary: 2-3 days for major cities, 3-5 days for other locations. Shipping costs are calculated at checkout based on location and order weight.",
-      category: "shipping",
+        "Yes. We supply groceries, beverages, household essentials, and other supermarket products in bulk for homes, restaurants, hotels, offices, schools, and events. Contact us for bulk pricing and wholesale orders.",
+      category: "shopping",
     },
     {
       id: 7,
-      question: "Are your products genuine and authentic?",
+      question: "Do you stock international and local brands?",
       answer:
-        "Absolutely! We are authorized distributors for all major brands we carry. Every product comes with manufacturer warranty and we guarantee 100% authenticity. Counterfeit products are not sold in our store.",
+        "Yes. We offer a wide selection of trusted Nigerian and international brands across groceries, beverages, personal care, household products, baby items, frozen foods, and more.",
       category: "products",
       popular: true,
     },
     {
       id: 8,
-      question: "Can I customize my order?",
+      question: "What products can I shop for?",
       answer:
-        "Yes, we offer customization services for corporate branding on items like Beverages, skin care products, and house hold supplies. Minimum order quantities apply. Contact our customization team on What's App +234 704 401 2151 for quotes and samples.",
-      category: "products",
+        "Family House Supermarket offers a wide selection of products, including groceries, fresh produce, bakery items, frozen foods, beverages, soft drinks, wines, spirits, liquor, snacks, household supplies, cleaning products, toiletries, baby products, beauty items, kitchen essentials, and other everyday necessities—all in one convenient place.",
+      category: "shopping",
     },
   ];
 
@@ -340,7 +341,9 @@ export default function HelpPage() {
                 <Mail className="w-6 h-6" />
               </div>
               <h4 className="font-bold text-gray-900 mb-1">Email Us</h4>
-              <p className="text-sm text-gray-500">familyhousesupermarket@gmail.com</p>
+              <p className="text-sm text-gray-500">
+                familyhousesupermarket@gmail.com
+              </p>
             </a>
 
             <a
