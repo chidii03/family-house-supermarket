@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-
 const Newsletter = () => {
   const POPUP_DELAY_MS = 10000;
   const [email, setEmail] = useState("");
@@ -74,7 +73,8 @@ const Newsletter = () => {
                 Fresh offers for everyday essentials.
               </h2>
               <p className="mt-3 text-gray-600">
-                Get grocery deals, bakery updates, chilled drink offers and household restock reminders.
+                Get grocery deals, bakery updates, chilled drink offers and
+                household restock reminders.
               </p>
             </div>
 
@@ -117,13 +117,14 @@ const Newsletter = () => {
                 <i className="bi bi-x-lg text-xl"></i>
               </button>
 
-              <div className="hidden p-8 md:flex md:items-center md:justify-center">
+              <div className="relative hidden overflow-hidden md:block">
                 <Image
                   src="https://images.unsplash.com/photo-1670684684445-a4504dca0bbc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c3VwZXJtYXJrZXR8ZW58MHx8MHx8fDA%3D"
                   alt="Fresh groceries and household essentials"
-                  width={1000}
-                  height={900}
-                  className="h-full w-full object-cover transition duration-500 hover:scale-105"
+                  fill
+                  priority
+                  sizes="40vw"
+                  className="object-cover transition duration-500 hover:scale-105"
                 />
               </div>
 
@@ -136,11 +137,13 @@ const Newsletter = () => {
                 </h2>
 
                 <p className="mt-4 text-lg font-semibold">
-                  Enjoy <span className="text-(--prim-color)">30% off</span> your first Family House order.
+                  Enjoy <span className="text-(--prim-color)">30% off</span>{" "}
+                  your first Family House order.
                 </p>
 
                 <p className="mt-4 text-gray-600">
-                  Subscribe for grocery deals, beverage promos, bakery drops and household essentials updates.
+                  Subscribe for grocery deals, beverage promos, bakery drops and
+                  household essentials updates.
                 </p>
 
                 <form onSubmit={handleSubscribe} className="mt-6 space-y-4">

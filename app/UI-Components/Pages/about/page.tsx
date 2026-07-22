@@ -61,10 +61,11 @@ export default function AboutPage() {
 
           <div className="relative h-112.5 overflow-hidden rounded-3xl shadow-2xl">
             <Image
-              src="/brand/about-hero.jpeg"
+              src="/about/brand/about-hero.jpeg"
               alt="Family House Supermarket"
               fill
               priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
           </div>
@@ -166,27 +167,30 @@ export default function AboutPage() {
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           <div className="relative h-105 overflow-hidden rounded-3xl shadow-xl">
             <Image
-              src="/brand/about1.jpeg"
+              src="/about/brand/about1.jpeg"
               alt="Grocery aisle"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition duration-500 hover:scale-105"
             />
           </div>
 
           <div className="relative h-105 overflow-hidden rounded-3xl shadow-xl">
             <Image
-              src="/brand/about2.jpeg"
+              src="/about/brand/about2.jpeg"
               alt="Personal care section"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition duration-500 hover:scale-105"
             />
           </div>
 
           <div className="relative h-105 overflow-hidden rounded-3xl shadow-xl">
             <Image
-              src="/brand/about3.jpeg"
+              src="/about/brand/about3.jpeg"
               alt="Family House Supermarket"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transition duration-500 hover:scale-105"
             />
           </div>

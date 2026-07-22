@@ -11,7 +11,7 @@ export const brand = {
   address: "198C Governor's Road, Ikotun, Lagos, Nigeria",
   instagram: "https://www.instagram.com/familyhousesupermarket?utm_source=qr",
   tiktok: "https://www.tiktok.com/@familyhousesupermarket",
-  logo: "/brand/family-house-logo.jpeg",
+  logo: "/about/brand/family-house-logo.jpeg",
   description:
     "Family House Supermarket is a modern neighborhood supermarket in Ikotun, Lagos, bringing quality groceries, beverages, toiletries, household essentials, bakery treats, frozen foods, gadgets, wines and spirits together in one convenient shopping experience.",
 };

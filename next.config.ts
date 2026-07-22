@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
       // Your existing patterns
       {
         protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
         hostname: "**.amazon.com",
       },
       {
