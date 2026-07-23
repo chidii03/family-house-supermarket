@@ -63,8 +63,8 @@ export default function TermsAndConditions() {
             <nav className="space-y-1">
               {toc.map((item) => (
                 <a key={item.n} href={`#section-${item.n}`}
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-[#4b70f5]/10 hover:text-[#4b70f5] transition-all group">
-                  <span className="text-[10px] font-black text-gray-300 group-hover:text-[#4b70f5]/40 w-6">{item.n}</span>
+                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-[#dc2626]/10 hover:text-[#dc2626] transition-all group">
+                  <span className="text-[10px] font-black text-gray-300 group-hover:text-[#dc2626] 40 w-6">{item.n}</span>
                   {item.label}
                 </a>
               ))}
@@ -91,7 +91,7 @@ export default function TermsAndConditions() {
                 "Engage in any activity that disrupts or damages the Store's functionality",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="text-[#4b70f5] font-bold mt-0.5">—</span> {item}
+                  <span className="text-[#dc2626] font-bold">—</span> {item}
                 </li>
               ))}
             </ul>
@@ -100,8 +100,8 @@ export default function TermsAndConditions() {
           <Section icon={ShoppingBag} number="03" title="Products & Pricing">
             <p>All products are subject to availability. We reserve the right to discontinue any product at any time without notice.</p>
             <p>Prices are displayed in <strong className="text-gray-900">Nigerian Naira (₦)</strong> and include applicable taxes unless stated otherwise. We strive for accuracy but reserve the right to correct pricing errors. If a pricing error affects your order, we will notify you before processing payment.</p>
-            <div className="bg-[#4b70f5]/5 border border-[#4b70f5]/20 rounded-xl p-4 mt-4">
-              <p className="text-sm"><strong className="text-[#4b70f5]">Note:</strong> Product images are for illustrative purposes and may differ slightly from the physical item. Colour accuracy may vary depending on your screen settings.</p>
+            <div className="bg-[#dc2626]/5 border border-[#dc2626]/20 rounded-xl p-4 mt-4">
+              <p className="text-sm"><strong className="text-[#dc2626]">Note:</strong> Product images are for illustrative purposes and may differ slightly from the physical item. Colour accuracy may vary depending on your screen settings.</p>
             </div>
           </Section>
 
@@ -121,24 +121,24 @@ export default function TermsAndConditions() {
                 "Incorrect addresses provided by the customer may incur re-delivery charges",
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="text-[#4b70f5] font-bold mt-0.5">—</span> {item}
+                  <span className="text-[#dc2626] font-bold">—</span> {item}
                 </li>
               ))}
             </ul>
           </Section>
 
           <Section icon={Shield} number="06" title="Returns & Refunds">
-            <p>Returns are governed by our <Link href="/return-policy" className="text-[#4b70f5] font-semibold underline hover:text-[#2952e3]">Return Policy</Link>, which forms part of these Terms. By purchasing, you agree to the conditions set out therein.</p>
+            <p>Returns are governed by our <Link href="/return-policy" className="text-[#dc2626] font-semibold underline hover:text-[#dc2626]">Return Policy</Link>, which forms part of these Terms. By purchasing, you agree to the conditions set out therein.</p>
             <p>Refunds, where applicable, will be processed to the original payment method within 5–10 business days of our receipt and inspection of the returned item.</p>
           </Section>
 
           <Section icon={Users} number="07" title="Intellectual Property">
-            <p>All content on this Store — including text, images, logos, product descriptions, and design — is the exclusive property of Steve O Bizz Store or its licensors and is protected by Nigerian and international intellectual property laws.</p>
+            <p>All content on this Store — including text, images, logos, product descriptions, and design — is the exclusive property of Family House Super Market or its licensors and is protected by Nigerian and international intellectual property laws.</p>
             <p>You may not reproduce, distribute, modify, or create derivative works from any Store content without our prior written permission.</p>
           </Section>
 
           <Section icon={AlertTriangle} number="08" title="Limitation of Liability">
-            <p>To the fullest extent permitted by law, Family House SuperMarket shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Store or products purchased from it.</p>
+            <p>To the fullest extent permitted by law, Family House Super Market shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Store or products purchased from it.</p>
             <p>Our total liability for any claim arising from a purchase shall not exceed the amount you paid for the item in question.</p>
             <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 mt-3">
               <p className="text-sm text-amber-800">Nothing in these Terms excludes or limits liability for death or personal injury caused by our negligence, or for fraud or fraudulent misrepresentation.</p>
