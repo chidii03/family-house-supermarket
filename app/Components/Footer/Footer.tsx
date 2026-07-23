@@ -48,7 +48,7 @@ export default function Footer() {
                 href={brand.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-(--prim-color)"
+                className="text-gray-500 hover:text-[#833AB4]"
                 aria-label="Instagram"
               >
                 <FaInstagram className="h-6 w-6" />
@@ -57,7 +57,7 @@ export default function Footer() {
                 href={brand.tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-(--prim-color)"
+                className="text-gray-500 hover:text-black"
                 aria-label="TikTok"
               >
                 <FaTiktok className="h-6 w-6" />
