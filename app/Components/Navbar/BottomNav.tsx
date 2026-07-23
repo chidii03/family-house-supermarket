@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import SearchBar from "@/app/Components/SearchBar";
-import { brand, slugify, supermarketCategories } from "@/supermarket.config";
+import { slugify, supermarketCategories } from "@/supermarket.config";
 
 type NavLink = {
   label: string;
@@ -21,7 +22,7 @@ const navLinks: NavLink[] = [
     label: "Shop",
     href: "/ShopAll",
     dropdown: [
-      { label: "CheckOut", href: "/UI-Components/Pages/checkout"},
+      { label: "CheckOut", href: "/UI-Components/Pages/checkout" },
       { label: "Flash Sales", href: "/FlashSales" },
       { label: "New Arrivals", href: "/ShopAll" },
     ],
@@ -40,6 +41,13 @@ export default function BottomNav() {
   const [isFixed, setIsFixed] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // schedule mount flag update asynchronously to avoid synchronous setState in effect
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsFixed(window.scrollY > 110);
@@ -66,6 +74,37 @@ export default function BottomNav() {
     };
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+      document.body.dataset.scrollY = String(scrollY);
+    } else {
+      const savedScrollY = document.body.dataset.scrollY;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      if (savedScrollY) {
+        window.scrollTo(0, parseInt(savedScrollY, 10));
+        delete document.body.dataset.scrollY;
+      }
+    }
+
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+    };
+  }, [mobileMenuOpen]);
+
   const toggleMobileDropdown = (label: string) => {
     setOpenDropdowns((prev) => ({ ...prev, [label]: !prev[label] }));
   };
@@ -75,6 +114,159 @@ export default function BottomNav() {
     setIsCatOpen(false);
     setOpenDropdowns({});
   };
+
+  const mobileSidebar = (
+    <div
+      className={`fixed inset-0 z-99999 lg:hidden transition-transform duration-500 ${
+        mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={() => setMobileMenuOpen(false)}
+      />
+
+      <div className="relative w-full sm:w-[88%] sm:max-w-sm h-full bg-white overflow-y-auto overscroll-contain">
+        <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
+          <span className="font-black Unbounded text-lg uppercase tracking-tighter">
+            Navigation
+          </span>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <i className="bi bi-x-lg text-xl" />
+          </button>
+        </div>
+
+        <nav className="p-6 space-y-4">
+          {navLinks.map((link) => (
+            <div key={link.label}>
+              {link.dropdown ? (
+                <>
+                  <button
+                    onClick={() => toggleMobileDropdown(link.label)}
+                    className="flex items-center justify-between w-full text-2xl Unbounded font-black text-gray-900 py-2"
+                  >
+                    {link.label}
+                    <i
+                      className={`ri-arrow-down-s-line transition-transform ${
+                        openDropdowns[link.label] ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <div
+                    className={`pl-4 space-y-2 overflow-hidden transition-all ${
+                      openDropdowns[link.label] ? "max-h-60 mt-2" : "max-h-0"
+                    }`}
+                  >
+                    {link.dropdown.map((item) => (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        onClick={closeMenus}
+                        className="block text-2xl Unbounded font-black text-gray-700 hover:text-(--prim-color) py-1"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <Link
+                  href={link.href}
+                  onClick={closeMenus}
+                  className="block text-2xl Unbounded font-black text-gray-900 hover:text-(--prim-color)"
+                >
+                  {link.label}
+                </Link>
+              )}
+            </div>
+          ))}
+        </nav>
+
+        <div className="px-6 py-4 border-t">
+          <h3 className="text-xs font-black Unbounded text-gray-400 uppercase tracking-widest mb-4">
+            Shop Categories
+          </h3>
+
+          <div className="space-y-2">
+            {supermarketCategories.map((cat) => (
+              <div
+                key={cat.title}
+                className="rounded-2xl border border-red-100 overflow-hidden"
+              >
+                <button
+                  onClick={() => toggleMobileDropdown(cat.title)}
+                  className={`flex items-center justify-between w-full p-4 transition-colors ${
+                    openDropdowns[cat.title]
+                      ? "bg-(--prim-color) text-white"
+                      : "bg-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <i className={`bi ${cat.icon} shrink-0`} />
+                    <span className="font-bold text-sm uppercase truncate">
+                      {cat.title}
+                    </span>
+                  </div>
+                  <i
+                    className={`bi bi-chevron-down transition-transform ${
+                      openDropdowns[cat.title] ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                <div
+                  className={`transition-all duration-300 ease-in-out ${
+                    openDropdowns[cat.title]
+                      ? "max-h-[60vh] overflow-y-auto bg-red-50"
+                      : "max-h-0 overflow-hidden"
+                  }`}
+                >
+                  <div className="p-4 space-y-6">
+                    <Link
+                      href={`/shop/${slugify(cat.title)}`}
+                      onClick={closeMenus}
+                      className="block w-full text-center bg-(--prim-color) text-white py-3 rounded-xl font-bold text-xs uppercase"
+                    >
+                      Shop All {cat.title}
+                    </Link>
+
+                    {cat.subCategories.map((sub) => (
+                      <div key={sub.name} className="space-y-3">
+                        <Link
+                          href={`/shop/${slugify(cat.title)}/${slugify(sub.name)}`}
+                          onClick={closeMenus}
+                          className="text-[10px] font-black text-(--prim-color) uppercase tracking-widest block hover:underline"
+                        >
+                          {sub.name}
+                        </Link>
+
+                        <div className="flex flex-col gap-3 pl-4 border-l border-red-100">
+                          {sub.items.map((it) => (
+                            <Link
+                              key={it}
+                              href={`/shop/${slugify(cat.title)}/${slugify(sub.name)}/${slugify(it)}`}
+                              onClick={closeMenus}
+                              className="text-sm font-bold text-gray-600 hover:text-(--prim-color) transition-colors"
+                            >
+                              {it}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -285,156 +477,9 @@ export default function BottomNav() {
         </div>
       </div>
 
-      <div
-        className={`fixed inset-0 z-10000 lg:hidden transition-transform duration-500 ${
-          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div
-          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-
-        <div className="relative w-[88%] max-w-sm h-full bg-white overflow-y-auto">
-          <div className="p-6 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-            <span className="font-black Unbounded text-base uppercase tracking-tight">
-              {brand.shortName}
-            </span>
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label="Close menu"
-            >
-              <i className="bi bi-x-lg text-xl" />
-            </button>
-          </div>
-
-          <nav className="p-6 space-y-4">
-            {navLinks.map((link) => (
-              <div key={link.label}>
-                {link.dropdown ? (
-                  <>
-                    <button
-                      onClick={() => toggleMobileDropdown(link.label)}
-                      className="flex items-center justify-between w-full text-2xl Unbounded font-black text-gray-900 py-2"
-                    >
-                      {link.label}
-                      <i
-                        className={`ri-arrow-down-s-line transition-transform ${
-                          openDropdowns[link.label] ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-
-                    <div
-                      className={`pl-4 space-y-2 overflow-hidden transition-all ${
-                        openDropdowns[link.label] ? "max-h-60 mt-2" : "max-h-0"
-                      }`}
-                    >
-                      {link.dropdown.map((item) => (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          onClick={closeMenus}
-                          className="block text-2xl Unbounded font-black text-gray-700 hover:text-(--prim-color) py-1"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <Link
-                    href={link.href}
-                    onClick={closeMenus}
-                    className="block text-2xl Unbounded font-black text-gray-900 hover:text-(--prim-color)"
-                  >
-                    {link.label}
-                  </Link>
-                )}
-              </div>
-            ))}
-          </nav>
-
-          <div className="px-6 py-4 border-t">
-            <h3 className="text-xs font-black Unbounded text-gray-400 uppercase tracking-widest mb-4">
-              Shop Categories
-            </h3>
-
-            <div className="space-y-2">
-              {supermarketCategories.map((cat) => (
-                <div
-                  key={cat.title}
-                  className="rounded-2xl border border-red-100 overflow-hidden"
-                >
-                  <button
-                    onClick={() => toggleMobileDropdown(cat.title)}
-                    className={`flex items-center justify-between w-full p-4 transition-colors ${
-                      openDropdowns[cat.title]
-                        ? "bg-(--prim-color) text-white"
-                        : "bg-white"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <i className={`bi ${cat.icon} shrink-0`} />
-                      <span className="font-bold text-sm uppercase truncate">
-                        {cat.title}
-                      </span>
-                    </div>
-                    <i
-                      className={`bi bi-chevron-down transition-transform ${
-                        openDropdowns[cat.title] ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  <div
-                    className={`transition-all duration-300 ease-in-out ${
-                      openDropdowns[cat.title]
-                        ? "max-h-[60vh] overflow-y-auto bg-red-50"
-                        : "max-h-0 overflow-hidden"
-                    }`}
-                  >
-                    <div className="p-4 space-y-6">
-                      <Link
-                        href={`/shop/${slugify(cat.title)}`}
-                        onClick={closeMenus}
-                        className="block w-full text-center bg-(--prim-color) text-white py-3 rounded-xl font-bold text-xs uppercase"
-                      >
-                        Shop All {cat.title}
-                      </Link>
-
-                      {cat.subCategories.map((sub) => (
-                        <div key={sub.name} className="space-y-3">
-                          <Link
-                            href={`/shop/${slugify(cat.title)}/${slugify(sub.name)}`}
-                            onClick={closeMenus}
-                            className="text-[10px] font-black text-(--prim-color) uppercase tracking-widest block hover:underline"
-                          >
-                            {sub.name}
-                          </Link>
-
-                          <div className="flex flex-col gap-3 pl-4 border-l border-red-100">
-                            {sub.items.map((it) => (
-                              <Link
-                                key={it}
-                                href={`/shop/${slugify(cat.title)}/${slugify(sub.name)}/${slugify(it)}`}
-                                onClick={closeMenus}
-                                className="text-sm font-bold text-gray-600 hover:text-(--prim-color) transition-colors"
-                              >
-                                {it}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Portaled onto document.body — see mobileSidebar above and the
+          comment there for why this is the actual fix. */}
+      {mounted && createPortal(mobileSidebar, document.body)}
     </div>
   );
 }

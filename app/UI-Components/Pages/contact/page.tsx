@@ -58,7 +58,9 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    // overflow-x-hidden: safety net so nothing on this page can ever push
+    // a horizontal scrollbar / blank strip on very narrow screens (Z-Fold).
+    <main className="min-h-screen w-full overflow-x-hidden bg-white text-black">
       <section className="relative overflow-hidden bg-black py-20 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_0%,rgba(248,196,0,0.44),transparent_30%),linear-gradient(135deg,#101010,#d71920)]" />
         <div className="relative max-w-360 mx-auto px-[5%] lg:px-[8%]">
@@ -70,20 +72,32 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="max-w-360 mx-auto grid gap-10 px-[5%] lg:px-[8%] py-16 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="space-y-5">
+      <section className="max-w-360 mx-auto grid gap-10 px-[1%] lg:px-[8%] py-16 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="w-full max-w-md mx-auto space-y-5 lg:max-w-none lg:mx-0">
           {[
             { icon: Phone, label: "WhatsApp / Call", value: brand.phone, href: `tel:${brand.phoneInternational}` },
             { icon: Mail, label: "Email", value: brand.email, href: `mailto:${brand.email}` },
             { icon: MapPin, label: "Address", value: brand.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(brand.address)}` },
           ].map((item) => (
-            <a key={item.label} href={item.href} target={item.label === "Address" ? "_blank" : undefined} rel={item.label === "Address" ? "noopener noreferrer" : undefined} className="flex gap-5 rounded-2xl border border-red-100 bg-[#fffaf0] p-6 hover:shadow-lg">
-              <span className="flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl bg-(--prim-color) text-white">
-                <item.icon />
+            <a
+              key={item.label}
+              href={item.href}
+              target={item.label === "Address" ? "_blank" : undefined}
+              rel={item.label === "Address" ? "noopener noreferrer" : undefined}
+              className="flex w-full items-start gap-3 rounded-2xl border border-red-100 bg-[#fffaf0] p-4 sm:gap-5 sm:p-6 hover:shadow-lg"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-(--prim-color) text-white sm:h-13 sm:w-13">
+                <item.icon size={18} className="sm:hidden" />
+                <item.icon size={22} className="hidden sm:block" />
               </span>
-              <span>
-                <span className="block text-xs font-black uppercase tracking-widest text-gray-500">{item.label}</span>
-                <span className="mt-1 block font-bold text-gray-950">{item.value}</span>
+              {/* min-w-0 is required alongside flex-1 for break-words to
+                  actually take effect inside a flex item — without it the
+                  box refuses to shrink below the text's natural width,
+                  which is what was pushing the page wider than the
+                  viewport on the Z-Fold. */}
+              <span className="min-w-0 flex-1">
+                <span className="block text-[11px] font-black uppercase tracking-widest text-gray-500 sm:text-xs">{item.label}</span>
+                <span className="mt-1 block wrap-break-word text-sm font-bold text-gray-950 sm:text-base">{item.value}</span>
               </span>
             </a>
           ))}
@@ -92,7 +106,7 @@ export default function ContactPage() {
             href={`https://wa.me/${brand.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="block rounded-2xl bg-black p-6 text-center text-sm font-black uppercase tracking-widest text-white hover:bg-(--prim-color)"
+            className="block w-full rounded-2xl bg-black p-4 text-center text-xs font-black uppercase tracking-widest text-white hover:bg-(--prim-color) sm:p-6 sm:text-sm"
           >
             Chat on WhatsApp
           </a>
