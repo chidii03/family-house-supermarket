@@ -14,14 +14,17 @@ type SanityImage = {
 };
 
 interface DeliveryEstimate {
-  standard: string;
-  fastest: string;
+  deliveryDate: string;
+  fastestDelivery: string;
+  isSameDayAvailable: boolean;
   countdown: string;
+  countdownHours: number;
+  countdownMins: number;
 }
 
 interface Product {
   _id: string;
-  
+
   name: string;
   price: number;
   image: SanityImage[];
@@ -58,46 +61,46 @@ export default function AddToCartSection({ product }: Props) {
   const handleQtyChange = (amount: number) => {
     setQty(Math.max(1, amount));
   };
- 
+
   // Inside AddToCartSection.tsx
 
-const handleAddToCart = (isBuyNow = false) => {
-  if (qty <= 0) return;
+  const handleAddToCart = (isBuyNow = false) => {
+    if (qty <= 0) return;
 
-  const existingCart: CartItem[] = JSON.parse(
-    localStorage.getItem("cart") || "[]"
-  );
+    const existingCart: CartItem[] = JSON.parse(
+      localStorage.getItem("cart") || "[]",
+    );
 
-  const itemIndex = existingCart.findIndex(
-    (item) => item._id === product._id
-  );
+    const itemIndex = existingCart.findIndex(
+      (item) => item._id === product._id,
+    );
 
-  if (itemIndex > -1) {
-    // Correctly incrementing based on the current local state 'qty'
-    existingCart[itemIndex].qty += qty;
-  } else {
-    const newItem = {
-      _id: product._id,
-      name: product.name,
-      price: product.price,
-      qty: qty,
-      image: product.image,
-      slug: product.slug.current,
-    };
-    existingCart.push(newItem);
-  }
+    if (itemIndex > -1) {
+      // Correctly incrementing based on the current local state 'qty'
+      existingCart[itemIndex].qty += qty;
+    } else {
+      const newItem = {
+        _id: product._id,
+        name: product.name,
+        price: product.price,
+        qty: qty,
+        image: product.image,
+        slug: product.slug.current,
+      };
+      existingCart.push(newItem);
+    }
 
-  localStorage.setItem("cart", JSON.stringify(existingCart));
+    localStorage.setItem("cart", JSON.stringify(existingCart));
 
-  window.dispatchEvent(new Event("storageUpdate"));
-  window.dispatchEvent(new Event("storage")); 
+    window.dispatchEvent(new Event("storageUpdate"));
+    window.dispatchEvent(new Event("storage"));
 
-  if (isBuyNow) {
-    router.push("/UI-Components/Pages/checkout");
-  } else {
-    toast.success(`${qty} ${product.name} added to cart!`);
-  }
-};
+    if (isBuyNow) {
+      router.push("/UI-Components/Pages/checkout");
+    } else {
+      toast.success(`${qty} ${product.name} added to cart!`);
+    }
+  };
 
   return (
     <div className="border border-red-100 rounded-2xl p-4 lg:p-6 shadow-lg bg-white sticky top-24">
@@ -109,21 +112,29 @@ const handleAddToCart = (isBuyNow = false) => {
         <div className="text-sm text-gray-600 mb-6 space-y-2">
           <p>
             Delivery{" "}
-            <span className="font-bold text-gray-900">{delivery.standard}</span>
+            <span className="font-bold text-gray-900">
+              {delivery.deliveryDate}
+            </span>
           </p>
+
           <p>
             Or fastest delivery{" "}
-            <span className="font-bold text-gray-900">{delivery.fastest}</span>.
-            Order within{" "}
+            <span className="font-bold text-gray-900">
+              {delivery.fastestDelivery}
+            </span>
+            . Order within{" "}
             <span className="text-[#00B517] font-bold">
               {delivery.countdown}
             </span>
           </p>
+
           <div className="flex items-center gap-2 text-xs text-gray-500 mt-2 bg-gray-50 p-2 rounded">
             <i className="bi bi-geo-alt-fill text-(--prim-color)"></i>
+
             <span>
               Delivering from{" "}
-              <span className="font-bold text-black">Ikotun, Lagos</span> ({brand.shortName})
+              <span className="font-bold text-black">Ikotun, Lagos</span> (
+              {brand.shortName})
             </span>
           </div>
         </div>
@@ -192,7 +203,7 @@ const handleAddToCart = (isBuyNow = false) => {
         </div>
         <div className="flex justify-between flex-wrap gap-1">
           <span>Returns</span>
-          <span className="text-(--prim-color)">30-Day Free Returns</span>
+          <span className="text-(--prim-color)">7-Day Free Returns</span>
         </div>
       </div>
 
