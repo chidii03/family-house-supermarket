@@ -7,6 +7,12 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { urlFor } from "@/app/lib/sanity";
 import { brand } from "@/supermarket.config";
+import {
+  calculateDeliveryFee,
+  FREE_DELIVERY_THRESHOLD,
+  LAGOS_AREA_OPTIONS,
+  type LagosArea,
+} from "@/app/lib/delivery";
 
 type SanityImage = {
   _type: "image";
@@ -69,10 +75,7 @@ export default function Checkout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [Loading, setLoading] = useState(false);
 
-  // --- LOGIC CONSTANTS FROM CART ---
   const VAT_RATE = 0.001;
-  const BASE_DELIVERY = 500;
-  const PER_ITEM_DELIVERY = 500;
 
   const [formData, setFormData] = useState({
     email: "",
@@ -81,6 +84,7 @@ export default function Checkout() {
     lastName: "",
     address: "",
     state: "",
+    lagosArea: "" as LagosArea | "",
     newsletter: false,
   });
 
@@ -93,8 +97,6 @@ export default function Checkout() {
     setCartItems(saveCart);
   }, []);
 
-  // --- REVISED CALCULATIONS ---
-
   // 1. Base Subtotal
   const baseSubtotal = cartItems.reduce((acc, item) => {
     const priceNum =
@@ -104,15 +106,27 @@ export default function Checkout() {
     return acc + priceNum * (item.qty || 1);
   }, 0);
 
-  // 2. Delivery Fee Logic (matches Cart)
-  const totalItems = cartItems.reduce((acc, item) => acc + (item.qty || 1), 0);
-
+  // 2. Delivery Fee — Alimosho flat rate, free above the threshold,
+  //    tiered by Lagos area / state zone otherwise. Only calculated here
+  //    on checkout, never on the cart page.
   const deliveryFee =
     deliveryOption === "pickup"
       ? 0
       : cartItems.length > 0
-        ? BASE_DELIVERY + (totalItems - 1) * PER_ITEM_DELIVERY
+        ? calculateDeliveryFee({
+            state: formData.state,
+            lagosArea: formData.lagosArea || undefined,
+            subtotal: baseSubtotal,
+          })
         : 0;
+
+  const qualifiesForFreeDelivery =
+    deliveryOption === "ship" && baseSubtotal >= FREE_DELIVERY_THRESHOLD;
+
+  const amountLeftForFreeDelivery = Math.max(
+    0,
+    FREE_DELIVERY_THRESHOLD - baseSubtotal,
+  );
 
   // 3. Tax Logic (matches Cart)
   const estimatedTax = baseSubtotal * VAT_RATE;
@@ -156,7 +170,13 @@ export default function Checkout() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+      // Reset the Lagos area whenever the state changes away from Lagos,
+      // so a stale area value can't sneak into a non-Lagos order.
+      ...(name === "state" && value !== "Lagos" ? { lagosArea: "" } : {}),
+    }));
   };
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
@@ -180,6 +200,20 @@ export default function Checkout() {
       return;
     }
 
+    if (
+      deliveryOption === "ship" &&
+      formData.state === "Lagos" &&
+      !formData.lagosArea
+    ) {
+      toast.error("Please select your area within Lagos.");
+      setLoading(false);
+      return;
+    }
+
+    const lagosAreaLabel = LAGOS_AREA_OPTIONS.find(
+      (a) => a.value === formData.lagosArea,
+    )?.label;
+
     // Prepare Order Data
     const orderData = {
       email: formData.email,
@@ -189,8 +223,12 @@ export default function Checkout() {
       address:
         deliveryOption === "pickup"
           ? `PICKUP FROM STORE - ${brand.address}`
-          : `${formData.address}, ${formData.state}`,
+          : `${formData.address}${
+              lagosAreaLabel ? `, ${lagosAreaLabel}` : ""
+            }, ${formData.state}`,
       state: formData.state || "Lagos",
+      lagosArea: formData.lagosArea || null,
+      deliveryFee,
       amount: finalGrandTotal,
       cart: cartItems,
       discountUsed: isDiscountApplied ? "FAMILY" : null,
@@ -289,49 +327,78 @@ export default function Checkout() {
               </div>
 
               {deliveryOption === "ship" && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* ✅ All 36 Nigerian States + FCT — compact scrollable dropdown */}
-                  <select
-                    name="state"
-                    onChange={handleChange}
-                    value={formData.state}
-                    size={1}
-                    className="border border-gray-300 rounded-lg p-3 md:col-span-2 bg-white cursor-pointer focus:ring-2 focus:ring-(--prim-color) outline-none appearance-none"
-                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
-                    required
-                  >
-                    <option value="">Select your state</option>
-                    {NIGERIAN_STATES.map((state) => (
-                      <option key={state} value={state}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    name="firstName"
-                    onChange={handleChange}
-                    value={formData.firstName}
-                    className="border border-gray-300 rounded-lg p-3"
-                    placeholder="First Name"
-                    required
-                  />
-                  <input
-                    name="lastName"
-                    onChange={handleChange}
-                    value={formData.lastName}
-                    className="border border-gray-300 rounded-lg p-3"
-                    placeholder="Last Name"
-                    required
-                  />
-                  <input
-                    name="address"
-                    onChange={handleChange}
-                    value={formData.address}
-                    className="border border-gray-300 rounded-lg p-3 md:col-span-2"
-                    placeholder="Street Address"
-                    required
-                  />
-                </div>
+                <>
+                  {!qualifiesForFreeDelivery && amountLeftForFreeDelivery > 0 && (
+                    <p className="mb-4 rounded-lg bg-red-50 border border-red-100 px-4 py-3 text-xs font-semibold text-(--prim-color)">
+                      Add ₦{amountLeftForFreeDelivery.toLocaleString()} more
+                      to your order for FREE delivery.
+                    </p>
+                  )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <select
+                      name="state"
+                      onChange={handleChange}
+                      value={formData.state}
+                      size={1}
+                      className="border border-gray-300 rounded-lg p-3 md:col-span-2 bg-white cursor-pointer focus:ring-2 focus:ring-(--prim-color) outline-none appearance-none"
+                      style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                      required
+                    >
+                      <option value="">Select your state</option>
+                      {NIGERIAN_STATES.map((state) => (
+                        <option key={state} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* Only shown for Lagos — this is what lets us tell
+                        Alimosho apart from Mainland / Island for pricing. */}
+                    {formData.state === "Lagos" && (
+                      <select
+                        name="lagosArea"
+                        onChange={handleChange}
+                        value={formData.lagosArea}
+                        className="border border-gray-300 rounded-lg p-3 md:col-span-2 bg-white cursor-pointer focus:ring-2 focus:ring-(--prim-color) outline-none appearance-none"
+                        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                        required
+                      >
+                        <option value="">Select your area in Lagos</option>
+                        {LAGOS_AREA_OPTIONS.map((area) => (
+                          <option key={area.value} value={area.value}>
+                            {area.label}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+
+                    <input
+                      name="firstName"
+                      onChange={handleChange}
+                      value={formData.firstName}
+                      className="border border-gray-300 rounded-lg p-3"
+                      placeholder="First Name"
+                      required
+                    />
+                    <input
+                      name="lastName"
+                      onChange={handleChange}
+                      value={formData.lastName}
+                      className="border border-gray-300 rounded-lg p-3"
+                      placeholder="Last Name"
+                      required
+                    />
+                    <input
+                      name="address"
+                      onChange={handleChange}
+                      value={formData.address}
+                      className="border border-gray-300 rounded-lg p-3 md:col-span-2"
+                      placeholder="Street Address"
+                      required
+                    />
+                  </div>
+                </>
               )}
 
               <button
@@ -454,9 +521,13 @@ export default function Checkout() {
                 <div className="flex justify-between text-gray-500">
                   <span className="Unbounded text-sm">Delivery Fee</span>
                   <span className="Unbounded text-sm font-semibold text-gray-800">
-                    {deliveryOption === "pickup"
-                      ? "₦0 (Pickup)"
-                      : `₦${deliveryFee.toLocaleString()}`}
+                    {deliveryOption === "pickup" ? (
+                      "₦0 (Pickup)"
+                    ) : qualifiesForFreeDelivery ? (
+                      <span className="text-green-600">FREE</span>
+                    ) : (
+                      `₦${deliveryFee.toLocaleString()}`
+                    )}
                   </span>
                 </div>
 
