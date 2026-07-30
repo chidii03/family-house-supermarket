@@ -40,14 +40,10 @@ export const getDeliveryEstimates = () => {
   return {
     // Example: Thu 30 Jul
     deliveryDate: deliveryDate.toLocaleDateString("en-GB", options),
-
-    // Example:
-    // Today • 40 mins - 1 hour
-    // Tomorrow • 40 mins - 1 hour
     fastestDelivery:
       now.getHours() >= CLOSING_HOUR
-        ? "Tomorrow • 40 mins - 1 hour"
-        : "Today • 40 mins - 1 hour",
+        ? "40 mins - 1 hour"
+        : "40 mins - 1 hour",
 
     isSameDayAvailable: now.getHours() < CLOSING_HOUR,
 
