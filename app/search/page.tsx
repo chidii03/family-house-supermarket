@@ -331,7 +331,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                         <div className="mt-auto">
                           <div className="flex items-center gap-2 text-xs text-gray-500 mb-4">
                             <Truck className="w-4 h-4" />
-                            <span>Free Delivery by Family House SuperMarket</span>
+                            <span>Delivery by Family House SuperMarket</span>
                           </div>
 
                           {/* REPLACED THE BUTTON HERE WITH CLIENT COMPONENT */}

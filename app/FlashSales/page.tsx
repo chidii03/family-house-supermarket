@@ -21,7 +21,7 @@ interface Product {
 }
 
 // Fetch products with discounts
-async function getData() {
+async function getData(): Promise<Product[]> {
   const query = `*[_type == "product" && lessprice > price] | order(_createdAt desc) {
     _id,
     name,
@@ -30,11 +30,11 @@ async function getData() {
     slug,
     image
   }`;
-  return await client.fetch(query);
+  return await client.fetch<Product[]>(query);
 }
 
 export default async function FlashSales() {
-  const products: Product[] = await getData();
+  const products = await getData();
 
   return (
     <div className="bg-white min-h-screen pb-20">
@@ -62,7 +62,7 @@ export default async function FlashSales() {
                 FLASH <span className="text-transparent bg-clip-text bg-linear-to-r from-(--prim-color) to-orange-400">SALE</span>
               </h1>
               <p className="text-gray-400 text-lg max-w-md mx-auto md:mx-0">
-                Exclusive deals on premium stationery and games. Prices reset when the timer hits zero.
+                Exclusive deals on food stuffs and household essentials. Prices reset when the timer hits zero.
               </p>
             </div>
 
