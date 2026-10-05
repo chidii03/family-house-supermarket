@@ -185,8 +185,6 @@ export default function Checkout() {
     e.preventDefault();
     setLoading(true);
 
-    // Browser autofill can populate the fields visually without firing React's
-    // onChange event, so use the live input values when available.
     const email = emailInputRef.current?.value.trim() || formData.email.trim() || "";
     const phone = phoneInputRef.current?.value.trim() || formData.phone.trim() || "";
 
