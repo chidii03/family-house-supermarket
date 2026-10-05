@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { API_URL } from "@/app/lib/api";
 import Link from "next/link";
 import Image from "next/image";
@@ -74,6 +74,8 @@ export default function Checkout() {
   );
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [Loading, setLoading] = useState(false);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const phoneInputRef = useRef<HTMLInputElement>(null);
 
   const VAT_RATE = 0.001;
 
@@ -183,9 +185,14 @@ export default function Checkout() {
     e.preventDefault();
     setLoading(true);
 
+    // Browser autofill can populate the fields visually without firing React's
+    // onChange event, so use the live input values when available.
+    const email = emailInputRef.current?.value.trim() || formData.email.trim() || "";
+    const phone = phoneInputRef.current?.value.trim() || formData.phone.trim() || "";
+
     const missingContactDetails =
-      !formData.email ||
-      !formData.phone ||
+      !email ||
+      !phone ||
       (deliveryOption === "ship" &&
         (!formData.firstName || !formData.lastName));
 
@@ -217,8 +224,8 @@ export default function Checkout() {
 
     // Prepare Order Data
     const orderData = {
-      email: formData.email,
-      phone: formData.phone,
+      email,
+      phone,
       firstName: formData.firstName,
       lastName: formData.lastName,
       address:
@@ -283,6 +290,7 @@ export default function Checkout() {
                 Contact Information
               </h5>
               <input
+                ref={emailInputRef}
                 name="email"
                 type="email"
                 onChange={handleChange}
@@ -292,6 +300,7 @@ export default function Checkout() {
                 required
               />
               <input
+                ref={phoneInputRef}
                 name="phone"
                 type="tel"
                 onChange={handleChange}
