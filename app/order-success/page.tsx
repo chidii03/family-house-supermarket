@@ -86,7 +86,7 @@ export default function SuccessPage() {
           </div>
           <div className="text-left flex-1">
             <h4 className="font-black uppercase tracking-widest text-xs text-gray-400 mb-1">What&apos;s Next?</h4>
-            <p className="text-gray-800 font-bold leading-tight">Our team is verifying your items. Tracking will be active within 24 hours.</p>
+            <p className="text-gray-800 font-bold leading-tight">Our team is verifying your items. Check your email for your tracking ID.</p>
           </div>
         </div>
 

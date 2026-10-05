@@ -34,11 +34,11 @@ export default function AdminDashboard() {
     }
   }, []);
 
-  // Auto-refresh every 30s when authenticated
+  // Keep an open dashboard in sync with payment confirmations.
   useEffect(() => {
     if (!isAuthenticated) return;
     loadOrders();
-    const interval = setInterval(loadOrders, 30_000);
+    const interval = setInterval(loadOrders, 5_000);
     return () => clearInterval(interval);
   }, [isAuthenticated, loadOrders]);
 
