@@ -4,22 +4,59 @@ import Link from "next/link";
 import { CheckCircle2, Package, ArrowRight} from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/app/lib/api";
 
 export default function SuccessPage() {
   const router = useRouter();
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
-    const pending = localStorage.getItem("payment_pending");
-    if (!pending) {
+    const params = new URLSearchParams(window.location.search);
+    const reference =
+      params.get("id") ||
+      params.get("reference") ||
+      params.get("trxref") ||
+      localStorage.getItem("pending_order_reference");
+
+    if (!reference) {
       router.push("/");
-    } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsValid(true);
-      localStorage.removeItem("payment_pending");
-      localStorage.removeItem("cart");
-      runFireWorks();
+      return;
     }
+
+    let cancelled = false;
+
+    const verifyPayment = async () => {
+      try {
+        const response = await fetch(
+          `${API_URL}/api/orders/verify/${encodeURIComponent(reference)}`,
+        );
+        const result = await response.json();
+
+        if (!result.success) {
+          router.replace("/UI-Components/Pages/checkout?payment=failed");
+          return;
+        }
+
+        if (!cancelled) {
+          setIsValid(true);
+          localStorage.removeItem("pending_order_reference");
+          localStorage.removeItem("payment_pending");
+          localStorage.removeItem("cart");
+          runFireWorks();
+        }
+      } catch (error) {
+        console.error("Payment verification failed", error);
+        router.replace(
+          "/UI-Components/Pages/checkout?payment=verification-failed",
+        );
+      }
+    };
+
+    verifyPayment();
+
+    return () => {
+      cancelled = true;
+    };
   }, [router]);
 
   if (!isValid) return null;

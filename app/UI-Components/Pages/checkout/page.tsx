@@ -194,7 +194,7 @@ export default function Checkout() {
       (deliveryOption === "ship" &&
         (!formData.firstName || !formData.lastName));
 
-    if (missingContactDetails) {
+    if (deliveryOption === "ship" && missingContactDetails) {
       toast.error("Please fill in all contact details.");
       setLoading(false);
       return;
@@ -250,6 +250,7 @@ export default function Checkout() {
 
       const data = await res.json();
       if (res.ok && data.checkoutUrl) {
+        localStorage.setItem("pending_order_reference", data.orderId);
         toast.success("Processing Payment...");
         window.location.href = data.checkoutUrl;
       } else {
