@@ -158,11 +158,6 @@ export default function Footer() {
           <p className="text-xs text-gray-600">
             &copy; {year} {brand.name}. All rights reserved.
           </p>
-          <Link href="https://vertexvaulttech.vercel.app">
-            <p className="text-xs font-bold  tracking-widest text-(--prim-color) cursor-pointer">
-              Designed by Vertex vault Tech Company
-            </p>
-          </Link>
         </div>
       </div>
     </footer>

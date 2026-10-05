@@ -183,12 +183,13 @@ export default function Checkout() {
     e.preventDefault();
     setLoading(true);
 
-    if (
+    const missingContactDetails =
       !formData.email ||
       !formData.phone ||
-      !formData.firstName ||
-      !formData.lastName
-    ) {
+      (deliveryOption === "ship" &&
+        (!formData.firstName || !formData.lastName));
+
+    if (missingContactDetails) {
       toast.error("Please fill in all contact details.");
       setLoading(false);
       return;
