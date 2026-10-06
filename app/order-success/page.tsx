@@ -74,7 +74,7 @@ export default function SuccessPage() {
         </div>
 
         <h1 className="Unbounded text-4xl md:text-6xl font-black mb-4 tracking-tighter uppercase">
-          Packaged <span className="text-(--prim-color)">With Love.</span>
+          Packaged <span className="text-(--prim-color,#d71920)">With Love.</span>
         </h1>
         <p className="text-gray-500 text-lg mb-12 max-w-md mx-auto font-medium">
           Your order is confirmed and being prepared for delivery. You&apos;ll receive a WhatsApp update shortly.

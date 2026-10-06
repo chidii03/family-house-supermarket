@@ -61,10 +61,10 @@ export default function AdminDashboard() {
       <div className="min-h-screen flex items-center justify-center p-6 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
         <div className="bg-white/10 backdrop-blur-xl p-10 rounded-3xl border border-white/20 shadow-2xl w-full max-w-md">
           <div className="text-center mb-6">
-            <div className="bg-(--prim-color,#6366f1) w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+            <div className="bg-(--prim-color,#d71920) w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg">
               <LayoutDashboard className="text-white" size={32} />
             </div>
-            <h2 className="text-3xl font-black text-(--prim-color,#6366f1) uppercase tracking-tighter">
+            <h2 className="text-3xl font-black text-(--prim-color,#d71920) uppercase tracking-tighter">
               Family House HQ
             </h2>
             <p className="mt-2 font-semibold text-white/70">Secure administrative gateway</p>
