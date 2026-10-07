@@ -21,6 +21,11 @@ export interface OrderResponse {
   status:         "PENDING" | "PAID" | "SHIPPED" | "DELIVERED";
   created_at:     string;
   items?:         unknown[];
+  payment_reference?: string;
+  paystack_transaction_id?: string;
+  amount_paid?: number;
+  delivery_method?: string;
+  pickup_info?: string;
 }
 
 // ── Payment ───────────────────────────────────────────────────────────────────

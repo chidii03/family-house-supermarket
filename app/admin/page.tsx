@@ -1,13 +1,14 @@
 // app/admin/page.tsx
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { fetchAdminOrders, updateOrderStatus, adminLogin, OrderResponse,} from "@/app/lib/api";
-import { X, LayoutDashboard, Package, LogOut, RefreshCw, Eye, CheckCircle, Truck, MapPin, AlertCircle,} from "lucide-react";
+import { X, LayoutDashboard, Package, LogOut, RefreshCw, Eye, CheckCircle, Truck, MapPin, AlertCircle, EyeOff,} from "lucide-react";
 import { toast } from "react-toastify";
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password,        setPassword]        = useState("");
+  const [showPassword,    setShowPassword]   = useState(false);
   const [loginLoading,    setLoginLoading]    = useState(false);
   const [orders,          setOrders]          = useState<OrderResponse[]>([]);
   const [ordersLoading,   setOrdersLoading]   = useState(false);
@@ -33,14 +34,6 @@ export default function AdminDashboard() {
       setOrdersLoading(false);
     }
   }, []);
-
-  // Keep an open dashboard in sync with payment confirmations.
-  useEffect(() => {
-    if (!isAuthenticated) return;
-    loadOrders();
-    const interval = setInterval(loadOrders, 5_000);
-    return () => clearInterval(interval);
-  }, [isAuthenticated, loadOrders]);
 
   const handleLogin = async () => {
     if (!password) { toast.error("Enter your password"); return; }
@@ -69,13 +62,18 @@ export default function AdminDashboard() {
             </h2>
             <p className="mt-2 font-semibold text-white/70">Secure administrative gateway</p>
           </div>
+          <div className="relative mb-6">
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Access Key"
-            className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-black mb-6 focus:ring-2 focus:ring-(--prim-color,#6366f1) outline-none transition-all"
+            className="w-full bg-white/5 border border-white/10 p-4 pr-14 rounded-xl text-black focus:ring-2 focus:ring-(--prim-color,#6366f1) outline-none transition-all"
             onChange={e => setPassword(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleLogin()}
           />
+          <button type="button" aria-label={showPassword ? "Hide password" : "Show password"} onClick={() => setShowPassword(v => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600" tabIndex={0}>
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+          </div>
           <button
             onClick={handleLogin}
             disabled={loginLoading}

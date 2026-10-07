@@ -233,6 +233,8 @@ export default function Checkout() {
               lagosAreaLabel ? `, ${lagosAreaLabel}` : ""
             }, ${formData.state}`,
       state: formData.state || "Lagos",
+      deliveryMethod: deliveryOption,
+      pickupInfo: deliveryOption === "pickup" ? `PICKUP FROM STORE - ${brand.address}` : null,
       lagosArea: formData.lagosArea || null,
       deliveryFee,
       amount: finalGrandTotal,
@@ -250,7 +252,7 @@ export default function Checkout() {
 
       const data = await res.json();
       if (res.ok && data.checkoutUrl) {
-        localStorage.setItem("pending_order_reference", data.orderId);
+        localStorage.setItem("pending_order_reference", data.reference || data.orderId);
         toast.success("Processing Payment...");
         window.location.href = data.checkoutUrl;
       } else {
