@@ -20,12 +20,21 @@ export interface OrderResponse {
   total_amount?:  number; 
   status:         "PENDING" | "PAID" | "SHIPPED" | "DELIVERED";
   created_at:     string;
-  items?:         unknown[];
+  items?:         OrderItem[];
   payment_reference?: string;
   paystack_transaction_id?: string;
   amount_paid?: number;
   delivery_method?: string;
   pickup_info?: string;
+}
+
+export interface OrderItem {
+  id?: number;
+  product_id?: string;
+  product_name: string;
+  qty: number;
+  price: number;
+  image?: string | null;
 }
 
 // ── Payment ───────────────────────────────────────────────────────────────────

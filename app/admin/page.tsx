@@ -169,6 +169,7 @@ export default function AdminDashboard() {
                   <tr>
                     <th className="p-5">Track ID</th>
                     <th className="p-5">Customer</th>
+                    <th className="p-5">Products / Price</th>
                     <th className="p-5">Location</th>
                     <th className="p-5">Amount</th>
                     <th className="p-5">Status</th>
@@ -188,12 +189,27 @@ export default function AdminDashboard() {
                          {order.customer_phone}
                         </div>
                       </td>
+                      <td className="p-5 min-w-60">
+                        <div className="space-y-1.5">
+                          {(order.items || []).map((item) => (
+                            <div key={item.id ?? `${item.product_name}-${item.price}`} className="text-xs">
+                              <span className="font-bold text-gray-900">{item.product_name}</span>
+                              <span className="text-gray-500"> × {item.qty}</span>
+                              <span className="block text-(--prim-color) font-semibold">₦{Number(item.price || 0).toLocaleString()} each</span>
+                            </div>
+                          ))}
+                          {!order.items?.length && <span className="text-xs text-gray-400">No item details</span>}
+                        </div>
+                      </td>
                       <td className="p-5">
                         <div className="flex items-center gap-1 font-bold text-gray-700 uppercase text-[11px]">
                           <MapPin size={10} /> {order.state}
                         </div>
                         <div className="text-gray-400 text-[10px] truncate max-w-37.5">
                           {order.address}
+                        </div>
+                        <div className="text-gray-600 text-[10px] font-bold uppercase mt-1">
+                          {order.delivery_method === "pickup" ? "Pickup" : "Delivery"}
                         </div>
                       </td>
                       <td className="p-5 font-black text-lg">
