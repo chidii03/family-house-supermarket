@@ -1,6 +1,6 @@
 // app/admin/page.tsx
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { fetchAdminOrders, updateOrderStatus, adminLogin, OrderResponse,} from "@/app/lib/api";
 import { X, LayoutDashboard, Package, LogOut, RefreshCw, Eye, CheckCircle, Truck, MapPin, AlertCircle, EyeOff,} from "lucide-react";
 import { toast } from "react-toastify";
@@ -14,6 +14,13 @@ export default function AdminDashboard() {
   const [ordersLoading,   setOrdersLoading]   = useState(false);
   const [fetchError,      setFetchError]      = useState("");
   const [selectedOrder,   setSelectedOrder]   = useState<OrderResponse | null>(null);
+
+  useEffect(() => {
+    if (!selectedOrder) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [selectedOrder]);
 
   // ── Load orders with visible error handling ──────────────────────────────
   const loadOrders = useCallback(async () => {
@@ -191,7 +198,7 @@ export default function AdminDashboard() {
                       </td>
                       <td className="p-5 min-w-60">
                         <div className="space-y-1.5">
-                          {(order.items || []).map((item) => (
+                          {(order.items || []).slice(0, 1).map((item) => (
                             <div key={item.id ?? `${item.product_name}-${item.price}`} className="text-xs">
                               <span className="font-bold text-gray-900">{item.product_name}</span>
                               <span className="text-gray-500"> × {item.qty}</span>
@@ -199,6 +206,7 @@ export default function AdminDashboard() {
                             </div>
                           ))}
                           {!order.items?.length && <span className="text-xs text-gray-400">No item details</span>}
+                          {(order.items?.length || 0) > 1 && <span className="block text-[10px] text-gray-500">+{order.items!.length - 1} more — view details</span>}
                         </div>
                       </td>
                       <td className="p-5">
@@ -255,8 +263,8 @@ export default function AdminDashboard() {
 
       {/* Order detail modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedOrder(null); }}>
+          <div className="bg-white w-full max-w-xl max-h-[90vh] rounded-3xl overflow-y-auto overscroll-contain shadow-2xl [scrollbar-width:thin]" onMouseDown={(event) => event.stopPropagation()}>
             <div className="p-8">
               <div className="flex justify-between items-start mb-6">
                 <h2 className="font-black text-2xl uppercase">Order Details</h2>
@@ -286,6 +294,18 @@ export default function AdminDashboard() {
               <div className="p-6 bg-gray-50 rounded-2xl mb-6">
                 <p className="text-xs uppercase font-black text-gray-400 mb-2 tracking-widest">Shipping To</p>
                 <p className="font-bold text-gray-900">{selectedOrder.address}</p>
+              </div>
+
+              <div className="p-6 bg-gray-50 rounded-2xl mb-6">
+                <p className="text-xs uppercase font-black text-gray-400 mb-3 tracking-widest">Products</p>
+                <div className="max-h-56 overflow-y-auto overscroll-contain pr-2 space-y-3 [scrollbar-width:thin]">
+                  {(selectedOrder.items || []).map((item) => (
+                    <div key={item.id ?? `${item.product_name}-${item.price}`} className="flex items-start justify-between gap-4 border-b border-gray-200 pb-3 last:border-0">
+                      <div><p className="font-bold text-gray-900">{item.product_name}</p><p className="text-sm text-gray-500">Quantity: {item.qty}</p></div>
+                      <p className="font-bold text-(--prim-color)">₦{Number(item.price || 0).toLocaleString()} each</p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="flex gap-3">
