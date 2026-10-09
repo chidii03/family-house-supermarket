@@ -42,6 +42,10 @@ export default function AdminDashboard() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isAuthenticated) loadOrders();
+  }, [isAuthenticated, loadOrders]);
+
   const handleLogin = async () => {
     if (!password) { toast.error("Enter your password"); return; }
     setLoginLoading(true);
@@ -264,8 +268,8 @@ export default function AdminDashboard() {
       {/* Order detail modal */}
       {selectedOrder && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelectedOrder(null); }}>
-          <div className="bg-white w-full max-w-xl max-h-[90vh] rounded-3xl overflow-y-auto overscroll-contain shadow-2xl [scrollbar-width:thin]" onMouseDown={(event) => event.stopPropagation()}>
-            <div className="p-8">
+          <div className="bg-white w-full max-w-xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl" onMouseDown={(event) => event.stopPropagation()}>
+            <div className="max-h-[90vh] overflow-y-auto overscroll-contain p-8 [scrollbar-width:thin]">
               <div className="flex justify-between items-start mb-6">
                 <h2 className="font-black text-2xl uppercase">Order Details</h2>
                 <button onClick={() => setSelectedOrder(null)} className="p-2 bg-gray-100 rounded-full hover:bg-gray-200 transition-all">
