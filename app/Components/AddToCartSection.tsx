@@ -176,7 +176,6 @@ export default function AddToCartSection({ product }: Props) {
         <div className="space-y-3">
           <button
             onClick={() => handleAddToCart(false)}
-            disabled={product.inStock === false}
             className="w-full bg-white hover:bg-red-50 text-(--prim-color) border border-red-100 font-bold py-3 rounded-full shadow-sm transition-all active:scale-95 text-xs sm:text-sm uppercase tracking-wide"
           >
             {product.inStock === false ? "Out of Stock" : "Add to Cart"}
@@ -184,7 +183,6 @@ export default function AddToCartSection({ product }: Props) {
 
           <button
             onClick={() => handleAddToCart(true)}
-            disabled={product.inStock === false}
             className="w-full bg-(--prim-color) hover:brightness-90 text-white font-bold py-3 rounded-full shadow-md transition-all active:scale-95 text-xs sm:text-sm uppercase tracking-wide"
           >
             {product.inStock === false ? "Out of Stock" : "Buy Now"}
