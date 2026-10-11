@@ -11,12 +11,15 @@ export default function SuccessPage() {
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
+    if (isValid) {
+      const frame = window.requestAnimationFrame(() => runFireWorks());
+      return () => window.cancelAnimationFrame(frame);
+    }
+  }, [isValid]);
+
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const reference =
-      params.get("id") ||
-      params.get("reference") ||
-      params.get("trxref") ||
-      localStorage.getItem("pending_order_reference");
+    const reference = params.get("id") || params.get("reference") || params.get("trxref") || localStorage.getItem("pending_order_reference");
 
     if (!reference) {
       router.push("/");
@@ -38,11 +41,10 @@ export default function SuccessPage() {
         }
 
         if (!cancelled) {
-          setIsValid(true);
           localStorage.removeItem("pending_order_reference");
           localStorage.removeItem("payment_pending");
           localStorage.removeItem("cart");
-          runFireWorks();
+          setIsValid(true);
         }
       } catch (error) {
         console.error("Payment verification failed", error);
