@@ -15,6 +15,7 @@ type SanityImage = {
 // Exporting this so other components can use it if needed
 export type Product = {
   _id: string;
+  inStock?: boolean;
   name: string;
   price: number;
   lessprice?: number;
@@ -103,6 +104,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     name,
     "slug": slug.current,
     price,
+    inStock,
     oldPrice, 
     details,
     image, // Changed to fetch all images to match type

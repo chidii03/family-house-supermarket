@@ -13,6 +13,7 @@ type SanityImage = {
 // Define the type here or import it if you have a types file
 type Product = {
   _id: string;
+  inStock?: boolean;
   name: string;
   price: number;
   lessprice?: number;
@@ -30,6 +31,10 @@ export default function AddToCartButton({ product }: { product: Product }) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault(); 
     e.stopPropagation(); 
+    if (product.inStock === false) {
+      toast.error(`${product.name} is currently out of stock.`);
+      return;
+    }
 
     const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
     const existing = cart.find((item) => item._id === product._id);
@@ -49,18 +54,20 @@ export default function AddToCartButton({ product }: { product: Product }) {
       {/* Mobile: Full Width Button */}
       <button
         onClick={handleAddToCart}
+        disabled={product.inStock === false}
         className="md:hidden w-full bg-(--prim-color) text-white font-bold py-3 rounded-full text-sm flex items-center justify-center gap-2 active:scale-95 transition-transform mt-4"
       >
-        <ShoppingCart className="w-4 h-4" /> Add to Cart
+        <ShoppingCart className="w-4 h-4" /> {product.inStock === false ? "Out of Stock" : "Add to Cart"}
       </button>
 
       {/* Desktop: Side Button */}
       <div className="hidden md:flex flex-col justify-center items-center w-full">
         <button
           onClick={handleAddToCart}
+          disabled={product.inStock === false}
           className="w-full bg-(--prim-color) hover:opacity-90 text-white font-medium py-2.5 rounded-full shadow-md text-sm flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5"
         >
-          <ShoppingCart className="w-4 h-4" /> Buy
+          <ShoppingCart className="w-4 h-4" /> {product.inStock === false ? "Out of Stock" : "Buy"}
         </button>
       </div>
     </>

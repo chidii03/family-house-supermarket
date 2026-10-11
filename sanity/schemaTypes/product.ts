@@ -132,6 +132,7 @@ export default defineType({
     defineField({
       name: "inStock",
       title: "In Stock",
+      description: "Turn off when unavailable. The product stays visible but cannot be added to cart or purchased.",
       type: "boolean",
       initialValue: true,
     }),

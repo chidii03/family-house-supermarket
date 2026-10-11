@@ -13,6 +13,7 @@ interface SanityImage {
 
 interface Product {
   _id: string;
+  inStock?: boolean;
   name: string;
   price: number;
   lessprice?: number;

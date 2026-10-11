@@ -16,6 +16,7 @@ type SanityImage = {
 
 type Product = {
   _id: string;
+  inStock?: boolean;
   name: string;
   price: number;
   lessPrice: number;
@@ -36,7 +37,7 @@ export default function TopSelling() {
   useEffect(() => {
     const fetchTopSelling = async () => {
       const query = `*[_type == "product" && isTopSelling == true] | order(_createdAt desc)[0...16]{
-        _id, name, price, "lessprice": lessPrice, slug, image, review, sale, soldCurrent, soldTotal
+        _id, name, price, "lessprice": lessPrice, slug, image, review, sale, soldCurrent, soldTotal, inStock
       }`;
       try {
         const data = await sanityFetch<Product[]>(query);
@@ -51,6 +52,7 @@ export default function TopSelling() {
   }, []);
 
   const handleAddToCart = (product: Product) => {
+    if (product.inStock === false) { toast.error(`${product.name} is currently out of stock.`); return; }
     const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
     const existing = cart.find((item) => item._id === product._id);
 

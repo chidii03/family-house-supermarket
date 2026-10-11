@@ -18,6 +18,7 @@ type SanityImage = {
 
 type Product = {
   _id: string;
+  inStock?: boolean;
   name: string;
   price: number;
   lessprice: number;
@@ -34,7 +35,7 @@ export default function ShortProducts() {
     const fetchShortProducts = async () => {
       try {
         const query = `*[_type == "product" && isShortProducts == true] | order(_createdAt desc)[0...40]{
-            _id, name, price, "lessprice": lessPrice, slug, image, review
+            _id, name, price, "lessprice": lessPrice, slug, image, review, inStock
           }`;
         const data = await sanityFetch<Product[]>(query);
         setProducts(data || []);

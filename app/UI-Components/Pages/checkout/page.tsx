@@ -5,7 +5,7 @@ import { API_URL } from "@/app/lib/api";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "react-toastify";
-import { urlFor } from "@/app/lib/sanity";
+import { sanityFetch, urlFor } from "@/app/lib/sanity";
 import { brand } from "@/supermarket.config";
 import {
   calculateDeliveryFee,
@@ -184,6 +184,27 @@ export default function Checkout() {
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    let currentStock: { _id: string; inStock?: boolean }[];
+    try {
+      currentStock = await sanityFetch<{ _id: string; inStock?: boolean }[]>(
+        `*[_type == "product" && _id in $ids]{ _id, inStock }`,
+        { ids: cartItems.map((item) => item._id) },
+      );
+    } catch {
+      toast.error("We could not confirm product availability. Please try again.");
+      setLoading(false);
+      return;
+    }
+    const unavailableIds = new Set((currentStock || []).filter((item) => item.inStock === false).map((item) => item._id));
+    if (unavailableIds.size > 0) {
+      const availableCart = cartItems.filter((item) => !unavailableIds.has(item._id));
+      localStorage.setItem("cart", JSON.stringify(availableCart));
+      setCartItems(availableCart);
+      toast.error("One or more products are out of stock and were removed from your cart.");
+      setLoading(false);
+      return;
+    }
 
     const email = emailInputRef.current?.value.trim() || formData.email.trim() || "";
     const phone = phoneInputRef.current?.value.trim() || formData.phone.trim() || "";

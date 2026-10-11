@@ -20,6 +20,7 @@ type SanityImage = {
 
 type DealProduct = {
   _id: string;
+  inStock?: boolean;
   title: string;
   name: string;
   price: number;
@@ -41,6 +42,7 @@ export default function Deals() {
   type CartItem = DealProduct & { qty: number };
 
   const handleAddToCart = (product: DealProduct) => {
+    if (product.inStock === false) { toast.error(`${product.name} is currently out of stock.`); return; }
     const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
     const existing = cart.find((item) => item._id === product._id);
     if (existing) {
@@ -62,13 +64,13 @@ export default function Deals() {
           sanityFetch<DealProduct[]>(
             `*[_type == "product" && isBestDeal == true  && isBestOffer != true && isBestSales != true && isbanner != true && isShortProducts != true && isArrivals != true]
         | order(_createdAt desc)[0...3]{
-         _id, name, price, lessprice, details, slug, image, review,title
+         _id, name, price, lessprice, details, slug, image, review,title, inStock
       }`,
           ),
           sanityFetch<DealProduct[]>(
             `*[_type == "product" && isBestOffer != true && isTopSelling != true  && isHotDeal != true && isBestSales != true && isbanner != true && isShortProducts != true && isArrivals != true && isHero != true  && ispromo_banner != true]
         | order(_createdAt desc)[0...12]{
-         _id, name, price, lessprice, details, slug, image, review, 
+         _id, name, price, lessprice, details, slug, image, review, inStock 
       }`,
           ),
         ]);
