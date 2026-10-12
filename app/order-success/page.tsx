@@ -44,6 +44,10 @@ export default function SuccessPage() {
           localStorage.removeItem("pending_order_reference");
           localStorage.removeItem("payment_pending");
           localStorage.removeItem("cart");
+          // Keep components in the current tab (cart page and navbar badge)
+          // in sync. The native storage event is not delivered to its source tab.
+          window.dispatchEvent(new Event("storageUpdate"));
+          window.dispatchEvent(new Event("storage"));
           setIsValid(true);
         }
       } catch (error) {
