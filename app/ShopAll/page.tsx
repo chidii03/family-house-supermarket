@@ -66,9 +66,7 @@ export default async function ShopAll() {
     {estimates.countdownHours} hrs {estimates.countdownMins} mins
   </span>
 </p>
-                <p className="text-gray-500">
-                  Get it by <span className="font-medium text-gray-700">{estimates.standard}</span>
-                </p>
+                
               </div>
             </div>
           </div>
